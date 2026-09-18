@@ -158,7 +158,7 @@ def page(title, body, desc, path, image, extra_head=""):
 <body>
 <header class="topbar">
   <a class="wordmark" href="/">MESS<span>Middle East Shitshow</span></a>
-  <nav><a href="/episodes/">Episodes</a><a href="/about/">About</a>{'<a href="/contact/">Contact</a>' if contact_on() else ''}</nav>
+  <nav><a href="/episodes/">Episodes</a>{'<a href="/contact/">Contact</a>' if contact_on() else ''}</nav>
 </header>
 {body}
 <footer class="foot">
@@ -195,10 +195,12 @@ def ep_row(ep):
 
 
 def host_html(h, tag):
+    paras = h["bio"] if isinstance(h["bio"], list) else [h["bio"]]
+    bio = "".join("<p>" + re.sub(r"\*([^*]+)\*", r"<em>\1</em>", esc(x)) + "</p>" for x in paras)
     link = ""
     if h.get("link"):
         link = f'<p class="host-link"><a href="{esc(h["link"]["url"])}" rel="noopener">{esc(h["link"]["label"])}</a></p>'
-    return f'<div class="host"><p class="kicker">{esc(h["role"])}</p><{tag}>{esc(h["name"])}</{tag}><p>{esc(h["bio"])}</p>{link}</div>'
+    return f'<div class="host"><p class="kicker">{esc(h["role"])}</p><{tag}>{esc(h["name"])}</{tag}>{bio}{link}</div>'
 
 
 def contact_on():
@@ -409,12 +411,11 @@ def main():
     write("episodes/index.html", archive(show, eps))
     for i, ep in enumerate(eps):
         write(f"episodes/{ep['slug']}/index.html", episode(show, eps, i))
-    write("about/index.html", about(show))
     write("404.html", not_found(show))
     if contact_on():
         write("contact/index.html", contact_page(show))
     write("CNAME", CFG["domain"] + "\n")
-    urls = ["/", "/episodes/", "/about/"] + (["/contact/"] if contact_on() else []) + [e["url"] for e in eps]
+    urls = ["/", "/episodes/"] + (["/contact/"] if contact_on() else []) + [e["url"] for e in eps]
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
           + "".join(f"<url><loc>{BASE_URL}{u}</loc></url>" for u in urls) + "</urlset>\n")
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}/sitemap.xml\n")

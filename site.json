@@ -3,8 +3,8 @@
   "domain": "mideastshitshow.com",
   "title": "Middle East Shitshow",
   "short_title": "MESS",
-  "tagline": "A former Mossad analyst and his daughter on the Middle East: the strategy under the headlines, and the stories he can finally tell.",
-  "meta_description": "Middle East Shitshow (MESS): Daniella Alpher interviews her father, former Mossad analyst Yossi Alpher, on Israel, Iran and the region, with an eye on strategy rather than headlines.",
+  "tagline": "A former Mossad analyst and his daughter on Middle East issues of the day.",
+  "meta_description": "Middle East Shitshow (MESS): Daniella Alpher interviews her father, former Mossad analyst Yossi Alpher, on Middle East issues of the day.",
   "listen": [
     {
       "name": "Apple Podcasts",
@@ -29,7 +29,10 @@
     {
       "name": "Yossi Alpher",
       "role": "The analyst",
-      "bio": "Former Mossad operative and analyst, now in his eighties. In the late 1970s he was Israel's chief intelligence analyst for Iran. He has been thinking about this region professionally for longer than most of its current leaders have been in office.",
+      "bio": [
+        "A consultant and writer on Israel-related strategic issues, Yossi Alpher is the author of the prize-winning *Winners and Losers in the ‘Arab Spring’: Profiles in Chaos* (Routledge, 2020); *Periphery: Israel's Search for Middle East Allies* and *No End of Conflict: Rethinking Israel-Palestine* (Rowman & Littlefield, 2015 and 2016, respectively).",
+        "Alpher served in the Israel Defense Forces as an intelligence officer, followed by service in the Mossad in operational and analytical roles. From 1981 to 1995 he was associated with the Jaffee Center for Strategic Studies at Tel Aviv University, ultimately serving as director of the center. From 2001 to 2012 he was coeditor, with Ghassan Khatib (vice-president of Bir Zeit University in Ramallah, Palestinian Authority) of the bitterlemons family of internet publications."
+      ],
       "link": {
         "url": "https://www.yossialpher.com/",
         "label": "Writing and commentary: yossialpher.com"
@@ -38,7 +41,7 @@
     {
       "name": "Daniella Alpher",
       "role": "The interviewer",
-      "bio": "Tel Aviv tech executive and former news producer. She asks the questions, pushes back, and gets the Mossad stories out of him."
+      "bio": "A tech executive marketing cybersecurity and AI in the Israeli tech sector; formerly a television producer at ABC News in New York, making news segments for Good Morning America."
     }
   ],
   "contact": {
