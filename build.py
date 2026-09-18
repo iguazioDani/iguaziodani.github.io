@@ -341,10 +341,18 @@ def contact_page(show):
     data._subject = "MESS website: " + (data.topic || "message") + " from " + data.name;
     fetch(f.action, {{ method: "POST", headers: {{ "Content-Type": "application/json", Accept: "application/json" }}, body: JSON.stringify(data) }})
       .then(function (r) {{
-        if (!r.ok) throw new Error("failed");
-        f.reset(); s.className = "form-status ok"; s.textContent = "Thanks. Your message is on its way.";
+        return r.json().catch(function () {{ return {{}}; }}).then(function (j) {{
+          if (r.ok) {{ f.reset(); s.className = "form-status ok"; s.textContent = "Thanks. Your message is on its way."; return; }}
+          var msg = (j.errors || []).map(function (x) {{ return x.message; }}).join(" ");
+          throw new Error(msg || "failed");
+        }});
       }})
-      .catch(function () {{ s.className = "form-status err"; s.textContent = "Something went wrong and your message wasn't sent. Please try again in a minute."; }})
+      .catch(function (err) {{
+        s.className = "form-status err";
+        s.textContent = (err && err.message && err.message !== "failed" && err.message !== "Failed to fetch")
+          ? "Your message wasn't sent: " + err.message
+          : "Something went wrong and your message wasn't sent. Please try again in a minute.";
+      }})
       .finally(function () {{ b.disabled = false; }});
   }});
 }})();
