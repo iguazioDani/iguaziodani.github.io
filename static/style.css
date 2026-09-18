@@ -161,3 +161,6 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
 .form-status { margin: 0; font-size: 17px; min-height: 1.6em; }
 .form-status.ok { color: #2f6b2f; }
 .form-status.err { color: var(--red); }
+
+.host p { margin: 0 0 1em; }
+.host p:last-child { margin-bottom: 0; }
