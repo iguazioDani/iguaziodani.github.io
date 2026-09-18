@@ -202,7 +202,7 @@ def host_html(h, tag):
 
 
 def contact_on():
-    return bool(CFG.get("contact", {}).get("access_key"))
+    return bool(CFG.get("contact", {}).get("formspree_id"))
 
 
 def home(show, eps):
@@ -313,14 +313,14 @@ def contact_page(show):
     c = CFG["contact"]
     topics = "".join(f"<option>{esc(t)}</option>" for t in c.get("topics", []))
     topic_field = f"""<label>Topic<select name="topic">{topics}</select></label>""" if topics else ""
+    note = f'<p class="lede-sm">{esc(c["privacy_note"])}</p>' if c.get("privacy_note") else ""
     body = f"""<main class="wrap narrow">
 <h1 class="page-title">Contact</h1>
 <p class="lede">{esc(c.get("intro", ""))}</p>
-<form class="contact" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="{esc(c['access_key'])}">
-  <input type="hidden" name="subject" value="New message from the MESS website">
-  <input type="hidden" name="from_name" value="MESS website">
-  <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+{note}
+<form class="contact" id="contact-form" action="https://formspree.io/f/{esc(c['formspree_id'])}" method="POST">
+  <input type="hidden" name="_subject" value="New message from the MESS website">
+  <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
   <label>Your name<input type="text" name="name" required autocomplete="name"></label>
   <label>Your email<input type="email" name="email" required autocomplete="email"></label>
   {topic_field}
@@ -337,12 +337,11 @@ def contact_page(show):
     var b = f.querySelector("button");
     b.disabled = true; s.className = "form-status"; s.textContent = "Sending...";
     var data = Object.fromEntries(new FormData(f));
-    data.subject = "MESS website: " + (data.topic || "message") + " from " + data.name;
+    data._subject = "MESS website: " + (data.topic || "message") + " from " + data.name;
     fetch(f.action, {{ method: "POST", headers: {{ "Content-Type": "application/json", Accept: "application/json" }}, body: JSON.stringify(data) }})
-      .then(function (r) {{ return r.json(); }})
-      .then(function (j) {{
-        if (j.success) {{ f.reset(); s.className = "form-status ok"; s.textContent = "Thanks. Your message is on its way."; }}
-        else {{ throw new Error(j.message || "failed"); }}
+      .then(function (r) {{
+        if (!r.ok) throw new Error("failed");
+        f.reset(); s.className = "form-status ok"; s.textContent = "Thanks. Your message is on its way.";
       }})
       .catch(function () {{ s.className = "form-status err"; s.textContent = "Something went wrong and your message wasn't sent. Please try again in a minute."; }})
       .finally(function () {{ b.disabled = false; }});

@@ -22,7 +22,7 @@
   "start_here": [
     20,
     14,
-    3
+    10
   ],
   "start_here_note": "Evergreen episodes.",
   "hosts": [
@@ -42,8 +42,9 @@
     }
   ],
   "contact": {
-    "access_key": "",
+    "formspree_id": "",
     "intro": "Questions for the show, feedback, or media inquiries. We read everything, and some listener questions become episodes.",
+    "privacy_note": "",
     "topics": [
       "A question for the show",
       "Feedback",
