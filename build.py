@@ -196,7 +196,10 @@ def ep_row(ep):
 
 def host_html(h, tag):
     paras = h["bio"] if isinstance(h["bio"], list) else [h["bio"]]
-    bio = "".join("<p>" + re.sub(r"\*([^*]+)\*", r"<em>\1</em>", esc(x)) + "</p>" for x in paras)
+    def fmt(x):
+        x = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", esc(x))
+        return re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", r'<a href="\2">\1</a>', x)
+    bio = "".join("<p>" + fmt(x) + "</p>" for x in paras)
     link = ""
     if h.get("link"):
         link = f'<p class="host-link"><a href="{esc(h["link"]["url"])}" rel="noopener">{esc(h["link"]["label"])}</a></p>'
