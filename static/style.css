@@ -84,10 +84,8 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
 /* bands */
 .band { padding: 56px 0; border-bottom: 1px solid var(--rule); }
 .band-hosts { background: var(--paper-2); }
-.hosts { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.hosts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
 .host h3, .host h2 { font-family: var(--display); font-weight: 800; font-stretch: 85%; font-size: 30px; line-height: 1.1; margin: 0 0 10px; }
-.host p:last-child { margin: 0; }
-.hosts-stack { grid-template-columns: 1fr; gap: 36px; margin: 40px 0; padding: 32px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
 
 .cards { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 .cards a { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 22px; border: 2px solid var(--ink); text-decoration: none; background: var(--paper); }
@@ -139,8 +137,7 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
 }
 
 /* host link */
-.host-link { margin-top: 12px !important; font-family: var(--display); font-size: 15px; font-weight: 600; }
-.kicker-gap { margin-top: 40px; }
+.host .host-link { margin-top: 12px; font-family: var(--display); font-size: 15px; font-weight: 600; }
 
 /* contact form */
 .contact { display: flex; flex-direction: column; gap: 18px; margin-top: 8px; }
@@ -161,15 +158,8 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
 .form-status { margin: 0; font-size: 17px; min-height: 1.6em; }
 .form-status.ok { color: #2f6b2f; }
 .form-status.err { color: var(--red); }
-
-.host p { margin: 0 0 1em; }
-.host p:last-child { margin-bottom: 0; }
-.host p { margin: 0 0 1em; }
-.host p:last-child { margin-bottom: 0; }
-
 .host p { margin: 0 0 1em; }
 .host p:last-child { margin-bottom: 0; }
 .host-photo { width: 100%; border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
-.hosts { row-gap: 0; }
 .hosts > .host { display: grid; grid-row: span 5; grid-template-rows: subgrid; align-content: start; }
 @media (max-width: 820px) { .hosts > .host { display: block; } .host-photo { margin-top: 24px; } }
