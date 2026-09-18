@@ -6,16 +6,31 @@
   "tagline": "A former Mossad analyst and his daughter on the Middle East: the strategy under the headlines, and the stories he can finally tell.",
   "meta_description": "Middle East Shitshow (MESS): Daniella Alpher interviews her father, former Mossad analyst Yossi Alpher, on Israel, Iran and the region, with an eye on strategy rather than headlines.",
   "listen": [
-    {"name": "Apple Podcasts", "url": "https://podcasts.apple.com/us/podcast/middle-east-shitshow-mess/id1873576964"},
-    {"name": "Spotify", "url": "https://open.spotify.com/show/0yocXNxCTiVI1nBKrqZz1D"},
-    {"name": "RSS", "url": "https://media.rss.com/middle-east-shitshow/feed.xml"}
+    {
+      "name": "Apple Podcasts",
+      "url": "https://podcasts.apple.com/us/podcast/middle-east-shitshow-mess/id1873576964"
+    },
+    {
+      "name": "Spotify",
+      "url": "https://open.spotify.com/show/0yocXNxCTiVI1nBKrqZz1D"
+    },
+    {
+      "name": "RSS",
+      "url": "https://media.rss.com/middle-east-shitshow/feed.xml"
+    }
   ],
-  "start_here": [20],
+  "start_here": [
+    20
+  ],
   "hosts": [
     {
       "name": "Yossi Alpher",
       "role": "The analyst",
-      "bio": "Former Mossad operative and analyst, now in his eighties. In the late 1970s he was Israel's chief intelligence analyst for Iran. He has been thinking about this region professionally for longer than most of its current leaders have been in office."
+      "bio": "Former Mossad operative and analyst, now in his eighties. In the late 1970s he was Israel's chief intelligence analyst for Iran. He has been thinking about this region professionally for longer than most of its current leaders have been in office.",
+      "link": {
+        "url": "https://www.yossialpher.com/",
+        "label": "His writing and commentary: yossialpher.com"
+      }
     },
     {
       "name": "Daniella Alpher",
@@ -23,5 +38,14 @@
       "bio": "Tel Aviv tech executive and former news producer. She asks the questions, pushes back, and gets the Mossad stories out of him."
     }
   ],
-  "contact_email": ""
+  "contact": {
+    "access_key": "",
+    "intro": "Questions for the show, feedback, or media inquiries. We read everything, and some listener questions become episodes.",
+    "topics": [
+      "A question for the show",
+      "Feedback",
+      "Press or media",
+      "Something else"
+    ]
+  }
 }

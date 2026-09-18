@@ -158,7 +158,7 @@ def page(title, body, desc, path, image, extra_head=""):
 <body>
 <header class="topbar">
   <a class="wordmark" href="/">MESS<span>Middle East Shitshow</span></a>
-  <nav><a href="/episodes/">Episodes</a><a href="/about/">About</a></nav>
+  <nav><a href="/episodes/">Episodes</a><a href="/about/">About</a>{'<a href="/contact/">Contact</a>' if contact_on() else ''}</nav>
 </header>
 {body}
 <footer class="foot">
@@ -194,6 +194,17 @@ def ep_row(ep):
 </li>"""
 
 
+def host_html(h, tag):
+    link = ""
+    if h.get("link"):
+        link = f'<p class="host-link"><a href="{esc(h["link"]["url"])}" rel="noopener">{esc(h["link"]["label"])}</a></p>'
+    return f'<div class="host"><p class="kicker">{esc(h["role"])}</p><{tag}>{esc(h["name"])}</{tag}><p>{esc(h["bio"])}</p>{link}</div>'
+
+
+def contact_on():
+    return bool(CFG.get("contact", {}).get("access_key"))
+
+
 def home(show, eps):
     latest = eps[0]
     by_num = {e["num"]: e for e in eps}
@@ -203,9 +214,7 @@ def home(show, eps):
         picks_html = '<section class="band"><div class="wrap"><h2 class="kicker">Start here</h2><p class="lede-sm">Episodes that hold up after the news moves on.</p><ul class="cards">' + "".join(
             f'<li><a href="{p["url"]}"><span class="ep-num">{esc(ep_label(p))}</span><strong>{esc(p["title"])}</strong><span>{esc(p["summary"])}</span></a></li>'
             for p in picks) + "</ul></div></section>"
-    hosts = "".join(
-        f'<div class="host"><p class="kicker">{esc(h["role"])}</p><h3>{esc(h["name"])}</h3><p>{esc(h["bio"])}</p></div>'
-        for h in CFG["hosts"])
+    hosts = "".join(host_html(h, "h3") for h in CFG["hosts"])
     body = f"""
 <main>
 <section class="hero">
@@ -285,13 +294,10 @@ def episode(show, eps, i):
 
 
 def about(show):
-    hosts = "".join(
-        f'<div class="host"><p class="kicker">{esc(h["role"])}</p><h2>{esc(h["name"])}</h2><p>{esc(h["bio"])}</p></div>'
-        for h in CFG["hosts"])
+    hosts = "".join(host_html(h, "h2") for h in CFG["hosts"])
     contact = ""
-    if CFG.get("contact_email"):
-        e = esc(CFG["contact_email"])
-        contact = f'<h2 class="kicker">Contact</h2><p><a href="mailto:{e}">{e}</a></p>'
+    if contact_on():
+        contact = '<h2 class="kicker kicker-gap">Get in touch</h2><p><a class="more" href="/contact/">Send us a message</a></p>'
     body = f"""<main class="wrap narrow">
 <h1 class="page-title">About the show</h1>
 <p class="lede">{esc(show['description'])}</p>
@@ -301,6 +307,49 @@ def about(show):
 {contact}
 </main>"""
     return page("About", body, CFG["meta_description"], "/about/", show["image"])
+
+
+def contact_page(show):
+    c = CFG["contact"]
+    topics = "".join(f"<option>{esc(t)}</option>" for t in c.get("topics", []))
+    topic_field = f"""<label>Topic<select name="topic">{topics}</select></label>""" if topics else ""
+    body = f"""<main class="wrap narrow">
+<h1 class="page-title">Contact</h1>
+<p class="lede">{esc(c.get("intro", ""))}</p>
+<form class="contact" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="{esc(c['access_key'])}">
+  <input type="hidden" name="subject" value="New message from the MESS website">
+  <input type="hidden" name="from_name" value="MESS website">
+  <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <label>Your name<input type="text" name="name" required autocomplete="name"></label>
+  <label>Your email<input type="email" name="email" required autocomplete="email"></label>
+  {topic_field}
+  <label>Message<textarea name="message" rows="7" required></textarea></label>
+  <button type="submit">Send</button>
+  <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+</form>
+</main>
+<script>
+(function () {{
+  var f = document.getElementById("contact-form"), s = document.getElementById("form-status");
+  f.addEventListener("submit", function (e) {{
+    e.preventDefault();
+    var b = f.querySelector("button");
+    b.disabled = true; s.className = "form-status"; s.textContent = "Sending...";
+    var data = Object.fromEntries(new FormData(f));
+    data.subject = "MESS website: " + (data.topic || "message") + " from " + data.name;
+    fetch(f.action, {{ method: "POST", headers: {{ "Content-Type": "application/json", Accept: "application/json" }}, body: JSON.stringify(data) }})
+      .then(function (r) {{ return r.json(); }})
+      .then(function (j) {{
+        if (j.success) {{ f.reset(); s.className = "form-status ok"; s.textContent = "Thanks. Your message is on its way."; }}
+        else {{ throw new Error(j.message || "failed"); }}
+      }})
+      .catch(function () {{ s.className = "form-status err"; s.textContent = "Something went wrong and your message wasn't sent. Please try again in a minute."; }})
+      .finally(function () {{ b.disabled = false; }});
+  }});
+}})();
+</script>"""
+    return page("Contact", body, f"Contact {CFG['title']}.", "/contact/", show["image"])
 
 
 def not_found(show):
@@ -332,8 +381,10 @@ def main():
         write(f"episodes/{ep['slug']}/index.html", episode(show, eps, i))
     write("about/index.html", about(show))
     write("404.html", not_found(show))
+    if contact_on():
+        write("contact/index.html", contact_page(show))
     write("CNAME", CFG["domain"] + "\n")
-    urls = ["/", "/episodes/", "/about/"] + [e["url"] for e in eps]
+    urls = ["/", "/episodes/", "/about/"] + (["/contact/"] if contact_on() else []) + [e["url"] for e in eps]
     write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
           + "".join(f"<url><loc>{BASE_URL}{u}</loc></url>" for u in urls) + "</urlset>\n")
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}/sitemap.xml\n")
