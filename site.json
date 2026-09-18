@@ -23,6 +23,9 @@
     20,
     14,
     10
+  ],
+  "start_here_note": "",
+  "hosts": [
     {
       "name": "Yossi Alpher",
       "role": "The analyst",

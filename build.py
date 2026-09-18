@@ -211,7 +211,8 @@ def home(show, eps):
     picks = [by_num[n] for n in CFG.get("start_here", []) if n in by_num]
     picks_html = ""
     if picks:
-        picks_html = f'<section class="band"><div class="wrap"><h2 class="kicker">Start here</h2><p class="lede-sm">{esc(CFG.get("start_here_note", ""))}</p><ul class="cards">' + "".join(
+        note = f'<p class="lede-sm">{esc(CFG["start_here_note"])}</p>' if CFG.get("start_here_note") else ""
+        picks_html = f'<section class="band"><div class="wrap"><h2 class="kicker">Start here</h2>{note}<ul class="cards">' + "".join(
             f'<li><a href="{p["url"]}"><span class="ep-num">{esc(ep_label(p))}</span><strong>{esc(p["title"])}</strong><span>{esc(p["summary"])}</span></a></li>'
             for p in picks) + "</ul></div></section>"
     hosts = "".join(host_html(h, "h3") for h in CFG["hosts"])
