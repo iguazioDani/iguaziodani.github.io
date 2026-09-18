@@ -211,7 +211,7 @@ def home(show, eps):
     picks = [by_num[n] for n in CFG.get("start_here", []) if n in by_num]
     picks_html = ""
     if picks:
-        picks_html = '<section class="band"><div class="wrap"><h2 class="kicker">Start here</h2><p class="lede-sm">Episodes that hold up after the news moves on.</p><ul class="cards">' + "".join(
+        picks_html = f'<section class="band"><div class="wrap"><h2 class="kicker">Start here</h2><p class="lede-sm">{esc(CFG.get("start_here_note", ""))}</p><ul class="cards">' + "".join(
             f'<li><a href="{p["url"]}"><span class="ep-num">{esc(ep_label(p))}</span><strong>{esc(p["title"])}</strong><span>{esc(p["summary"])}</span></a></li>'
             for p in picks) + "</ul></div></section>"
     hosts = "".join(host_html(h, "h3") for h in CFG["hosts"])
@@ -359,7 +359,29 @@ def not_found(show):
 
 # ---------- build ----------
 
+def soften(text):
+    """Display spelling of the show name. URLs (lowercase, hyphenated) are left alone."""
+    text = text.replace("Shitshow", "Sh#tshow").replace("SHITSHOW", "SH#TSHOW")
+    return re.sub(r"(?<![\w./-])shitshow(?![\w.-])", "sh#tshow", text)
+
+
+def link_targets(text):
+    """Open links in a new tab: external links only, or all links, per site.json."""
+    mode = CFG.get("open_links_in_new_tab", "external")
+    def fix(m):
+        tag, href = m.group(0), m.group(1)
+        if "target=" in tag:
+            return tag
+        external = href.startswith(("http://", "https://")) and CFG["domain"] not in href
+        if external or (mode == "all" and not href.startswith(("mailto:", "#"))):
+            tag = tag[:-1] + ' target="_blank"' + ("" if "rel=" in tag else ' rel="noopener"') + ">"
+        return tag
+    return re.sub(r'<a\s[^>]*href="([^"]*)"[^>]*>', fix, text)
+
+
 def write(rel, text):
+    if rel.endswith(".html"):
+        text = link_targets(soften(text))
     p = OUT / rel
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(text, encoding="utf-8")

@@ -20,8 +20,11 @@
     }
   ],
   "start_here": [
-    20
+    20,
+    14,
+    3
   ],
+  "start_here_note": "Evergreen episodes.",
   "hosts": [
     {
       "name": "Yossi Alpher",
@@ -29,7 +32,7 @@
       "bio": "Former Mossad operative and analyst, now in his eighties. In the late 1970s he was Israel's chief intelligence analyst for Iran. He has been thinking about this region professionally for longer than most of its current leaders have been in office.",
       "link": {
         "url": "https://www.yossialpher.com/",
-        "label": "His writing and commentary: yossialpher.com"
+        "label": "Writing and commentary: yossialpher.com"
       }
     },
     {
@@ -47,5 +50,6 @@
       "Press or media",
       "Something else"
     ]
-  }
+  },
+  "open_links_in_new_tab": "external"
 }
