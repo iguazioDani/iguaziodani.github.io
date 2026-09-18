@@ -3,7 +3,7 @@
   "domain": "mideastshitshow.com",
   "title": "Middle East Shitshow",
   "short_title": "MESS",
-  "tagline": "A former Mossad analyst and his daughter on Middle East issues of the day.",
+  "tagline": "A former Mossad analyst and his daughter in Tel Aviv, talking about Middle East conflicts and strategies.",
   "meta_description": "Middle East Shitshow (MESS): Daniella Alpher interviews her father, former Mossad analyst Yossi Alpher, on Middle East issues of the day.",
   "listen": [
     {
@@ -41,7 +41,11 @@
     {
       "name": "Daniella Alpher",
       "role": "The interviewer",
-      "bio": "A tech executive marketing cybersecurity and AI in the Israeli tech sector; formerly a television producer at ABC News in New York, making news segments for Good Morning America."
+      "bio": "A tech executive marketing cybersecurity and AI in the Israeli tech sector; formerly a television producer at ABC News in New York, making news segments for Good Morning America.",
+      "photo": {
+        "src": "/studio.jpg",
+        "alt": "Yossi and Daniella Alpher recording MESS in the studio"
+      }
     }
   ],
   "contact": {

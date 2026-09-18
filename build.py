@@ -200,7 +200,10 @@ def host_html(h, tag):
     link = ""
     if h.get("link"):
         link = f'<p class="host-link"><a href="{esc(h["link"]["url"])}" rel="noopener">{esc(h["link"]["label"])}</a></p>'
-    return f'<div class="host"><p class="kicker">{esc(h["role"])}</p><{tag}>{esc(h["name"])}</{tag}>{bio}{link}</div>'
+    photo = ""
+    if h.get("photo"):
+        photo = f'<img class="host-photo" src="{esc(h["photo"]["src"])}" alt="{esc(h["photo"]["alt"])}" loading="lazy">'
+    return f'<div class="host"><p class="kicker">{esc(h["role"])}</p><{tag}>{esc(h["name"])}</{tag}>{bio}{link}{photo}</div>'
 
 
 def contact_on():
