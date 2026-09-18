@@ -164,7 +164,6 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
 
 .host p { margin: 0 0 1em; }
 .host p:last-child { margin-bottom: 0; }
-.host-photo { width: 100%; margin-top: 28px; border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
 .host p { margin: 0 0 1em; }
 .host p:last-child { margin-bottom: 0; }
 
