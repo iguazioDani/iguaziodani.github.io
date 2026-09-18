@@ -302,22 +302,6 @@ def episode(show, eps, i):
                 f'<script type="application/ld+json">{json.dumps(ld)}</script>')
 
 
-def about(show):
-    hosts = "".join(host_html(h, "h2") for h in CFG["hosts"])
-    contact = ""
-    if contact_on():
-        contact = '<h2 class="kicker kicker-gap">Get in touch</h2><p><a class="more" href="/contact/">Send us a message</a></p>'
-    body = f"""<main class="wrap narrow">
-<h1 class="page-title">About the show</h1>
-<p class="lede">{esc(show['description'])}</p>
-<div class="hosts hosts-stack">{hosts}</div>
-<h2 class="kicker">Listen</h2>
-{listen_links()}
-{contact}
-</main>"""
-    return page("About", body, CFG["meta_description"], "/about/", show["image"])
-
-
 def contact_page(show):
     c = CFG["contact"]
     topics = "".join(f"<option>{esc(t)}</option>" for t in c.get("topics", []))
