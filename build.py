@@ -147,7 +147,9 @@ def page(title, body, desc, path, image, extra_head=""):
 <meta property="og:image" content="{esc(image)}">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="{esc(image)}">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="{esc(CFG['title'])}" href="{esc(CFG['feed_url'])}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -157,7 +159,7 @@ def page(title, body, desc, path, image, extra_head=""):
 </head>
 <body>
 <header class="topbar">
-  <a class="wordmark" href="/">MESS<span>Middle East Shitshow</span></a>
+  <a class="wordmark" href="/" aria-label="MESS home">MESS</a>
   <nav><a href="/episodes/">Episodes</a>{'<a href="/contact/">Contact</a>' if contact_on() else ''}</nav>
 </header>
 {body}
