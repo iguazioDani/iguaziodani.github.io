@@ -28,8 +28,7 @@ img { max-width: 100%; height: auto; display: block; }
   border-bottom: 1px solid var(--ink);
   font-family: var(--display);
 }
-.wordmark { text-decoration: none; font-weight: 900; font-stretch: 75%; font-size: 26px; letter-spacing: .02em; display: flex; align-items: baseline; gap: 12px; }
-.wordmark span { font-weight: 500; font-stretch: 100%; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.wordmark { text-decoration: none; font-weight: 900; font-stretch: 75%; font-size: 26px; letter-spacing: .02em; }
 .topbar nav { display: flex; gap: 22px; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .topbar nav a { text-decoration: none; }
 
@@ -130,7 +129,6 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
   .ep-meta { text-align: left; padding: 0; }
   .ep-meta span { display: inline; }
   .ep-meta span + span::before { content: " \00b7  "; }
-  .wordmark span { display: none; }
   .band, .latest { padding: 40px 0; }
   .ep-nav { grid-template-columns: 1fr; }
   .ep-nav a.next { text-align: left; }
