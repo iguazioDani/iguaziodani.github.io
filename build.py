@@ -8,7 +8,7 @@ Usage:
 Standard library only, so GitHub Actions needs nothing installed.
 Edit site.json for copy and links; edit static/style.css for the look.
 """
-import argparse, email.utils, html, json, re, shutil, sys, urllib.request
+import argparse, email.utils, hashlib, html, json, re, shutil, sys, urllib.request
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
@@ -19,6 +19,8 @@ NS = {"itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd"}
 CFG = json.loads((ROOT / "site.json").read_text())
 BASE_URL = f"https://{CFG['domain']}"
 esc = html.escape
+# Changes whenever style.css changes, so browsers fetch the new file instead of a saved copy.
+CSS_VERSION = hashlib.sha1((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:8]
 
 
 # ---------- feed ----------
@@ -131,6 +133,35 @@ def listen_links(cls="listen"):
     ) + "</ul>"
 
 
+# Counts the first play and the end of each audio/video player on a page, labeled by episode.
+MEDIA_TRACKING = """<script>
+(function () {
+  function send(name, el) {
+    if (window.umami && el.dataset.episode) window.umami.track(name, { episode: el.dataset.episode });
+  }
+  function on(type, flag, verb) {
+    document.addEventListener(type, function (e) {
+      var el = e.target;
+      if (!(el instanceof HTMLMediaElement) || el.dataset[flag]) return;
+      el.dataset[flag] = "1";
+      send((el.tagName === "VIDEO" ? "Video " : "Audio ") + verb, el);
+    }, true);
+  }
+  on("play", "counted", "play");
+  on("ended", "counted_end", "finished");
+})();
+</script>"""
+
+
+def analytics_tags():
+    """Umami analytics (site.json "umami_website_id"). Only counts visits on the real domain."""
+    wid = CFG.get("umami_website_id")
+    if not wid:
+        return ""
+    return (f'<script defer src="https://cloud.umami.is/script.js" data-website-id="{esc(wid)}" '
+            f'data-domains="{esc(CFG["domain"])}"></script>\n{MEDIA_TRACKING}')
+
+
 def page(title, body, desc, path, image, extra_head=""):
     full_title = f"{title} | {CFG['title']}" if title != CFG["title"] else f"{CFG['title']} ({CFG['short_title']})"
     return f"""<!doctype html>
@@ -154,7 +185,8 @@ def page(title, body, desc, path, image, extra_head=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v={CSS_VERSION}">
+{analytics_tags()}
 {extra_head}
 </head>
 <body>
@@ -175,8 +207,15 @@ def page(title, body, desc, path, image, extra_head=""):
 """
 
 
+def media_label(ep):
+    """How an episode is named in the analytics: "Ep. 10", or the title if it has no number."""
+    return ep_label(ep) if ep["num"] else ep["title"]
+
+
 def player(ep):
-    return f'<audio controls preload="none" src="{esc(ep["audio"])}"></audio>' if ep["audio"] else ""
+    if not ep["audio"]:
+        return ""
+    return f'<audio controls preload="none" src="{esc(ep["audio"])}" data-episode="{esc(media_label(ep))}"></audio>'
 
 
 def ep_videos(ep):
@@ -188,7 +227,7 @@ def ep_videos(ep):
         attrs = "".join(f' {k}="{esc(str(v[k]))}"' for k in ("poster", "width", "height") if v.get(k))
         cap = f"<figcaption>{esc(v['caption'])}</figcaption>" if v.get("caption") else ""
         out.append(f'<figure class="ep-video"><video controls playsinline preload="metadata" '
-                   f'src="{esc(v["file"])}"{attrs}></video>{cap}</figure>')
+                   f'src="{esc(v["file"])}"{attrs} data-episode="{esc(media_label(ep))}"></video>{cap}</figure>')
     return "".join(out)
 
 
