@@ -25,6 +25,16 @@
     10
   ],
   "start_here_note": "",
+  "videos": [
+    {
+      "episode": 10,
+      "file": "/ep10-video.mp4",
+      "poster": "/E10-still-image.jpg",
+      "width": 1280,
+      "height": 720,
+      "caption": "March 26, 2026"
+    }
+  ],
   "hosts": [
     {
       "name": "Yossi Alpher",

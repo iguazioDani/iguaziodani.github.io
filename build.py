@@ -179,6 +179,19 @@ def player(ep):
     return f'<audio controls preload="none" src="{esc(ep["audio"])}"></audio>' if ep["audio"] else ""
 
 
+def ep_videos(ep):
+    """Videos listed in site.json "videos" for this episode, shown under the show notes."""
+    out = []
+    for v in CFG.get("videos", []):
+        if not v.get("file") or ep["num"] is None or str(v.get("episode")) != str(ep["num"]):
+            continue
+        attrs = "".join(f' {k}="{esc(str(v[k]))}"' for k in ("poster", "width", "height") if v.get(k))
+        cap = f"<figcaption>{esc(v['caption'])}</figcaption>" if v.get("caption") else ""
+        out.append(f'<figure class="ep-video"><video controls playsinline preload="metadata" '
+                   f'src="{esc(v["file"])}"{attrs}></video>{cap}</figure>')
+    return "".join(out)
+
+
 def ep_label(ep):
     if ep["num"]:
         return f"Ep. {ep['num']}"
@@ -292,6 +305,7 @@ def episode(show, eps, i):
   <h1 class="page-title">{esc(ep['title'])}</h1>
   {player(ep)}
   <div class="notes">{ep['html']}</div>
+  {ep_videos(ep)}
   <div class="ep-listen"><p class="kicker">Listen on</p>{listen_links()}</div>
 </article>
 {nav}
