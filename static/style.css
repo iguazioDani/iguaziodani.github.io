@@ -107,6 +107,9 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
 .episode .notes { font-size: 20px; }
 .episode .notes p { margin: 0 0 1em; }
 .ep-listen { margin: 40px 0; padding-top: 28px; border-top: 1px solid var(--rule); }
+.ep-video { margin: 32px 0 0; }
+.ep-video video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
+.ep-video figcaption { margin-top: 20px; font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .ep-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 2px solid var(--ink); padding-top: 20px; }
 .ep-nav a { text-decoration: none; font-family: var(--display); font-weight: 700; font-stretch: 90%; font-size: 18px; line-height: 1.25; }
 .ep-nav a.next { text-align: right; }
