@@ -1,0 +1,311 @@
+<!doctype html>
+<!--
+  Page for the Webby judges. Upload into the static/ folder on GitHub as webby.html.
+  Live address: https://mideastshitshow.com/webby.html
+  Not in the site menu, and hidden from search engines (robots noindex below).
+  The site build does not touch this file, so the analytics script is included here by hand.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For the Webby judges | Middle East Sh#tshow</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Middle East Sh#tshow (MESS): three episodes, with the moments to hear first.">
+<meta property="og:title" content="Middle East Sh#tshow: for the Webby judges">
+<meta property="og:description" content="Three episodes, with the moments to hear first.">
+<meta property="og:image" content="https://media.rss.com/middle-east-shitshow/podcast_cover_20260817_125919_1fd8dbab78fd024c55feebc975d05716.png">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap" rel="stylesheet">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="6f2c7790-fb7e-42ab-b862-ab77bcc4f477" data-domains="mideastshitshow.com"></script>
+<script>
+(function () {
+  function send(name, el) {
+    if (window.umami && el.dataset.episode) window.umami.track(name, { episode: el.dataset.episode });
+  }
+  function on(type, flag, verb) {
+    document.addEventListener(type, function (e) {
+      var el = e.target;
+      if (!(el instanceof HTMLMediaElement) || el.dataset[flag]) return;
+      el.dataset[flag] = "1";
+      send((el.tagName === "VIDEO" ? "Video " : "Audio ") + verb, el);
+    }, true);
+  }
+  on("play", "counted", "play");
+  on("ended", "counted_end", "finished");
+})();
+</script>
+<style>
+:root {
+  --paper: #f2ede3;
+  --paper-2: #e9e2d4;
+  --ink: #16140f;
+  --muted: #625b50;
+  --rule: #d3c9b7;
+  --red: #c9321c;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --wrap: 1120px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 19px; line-height: 1.6; }
+a { color: inherit; text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { color: var(--red); }
+img { max-width: 100%; height: auto; display: block; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+/* top bar, as on the rest of the site */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; max-width: var(--wrap); margin: 0 auto; padding: 18px 24px; border-bottom: 1px solid var(--ink); font-family: var(--display); }
+.wordmark { text-decoration: none; font-weight: 900; font-stretch: 75%; font-size: 26px; letter-spacing: .02em; }
+.topbar nav { display: flex; gap: 22px; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.topbar nav a { text-decoration: none; }
+
+.kicker { font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+.kicker-red { color: var(--red); }
+
+/* hero */
+.hero { border-bottom: 1px solid var(--ink); }
+.hero-grid { display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: center; padding-top: 48px; padding-bottom: 52px; }
+.masthead { font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: clamp(56px, 9vw, 112px); line-height: .86; letter-spacing: -.015em; text-transform: uppercase; margin: 0 0 26px; }
+.masthead span { color: var(--red); }
+.claim { font-family: var(--display); font-weight: 800; font-stretch: 85%; font-size: clamp(26px, 3.3vw, 38px); line-height: 1.1; margin: 0 0 18px; max-width: 22ch; }
+.intro { font-size: 20px; line-height: 1.55; max-width: 46ch; margin: 0; }
+.cover { width: 100%; aspect-ratio: 1; object-fit: cover; box-shadow: 10px 10px 0 var(--ink); background: var(--paper-2); }
+
+.band { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+
+/* the three episodes, in order */
+.path { list-style: none; padding: 0; margin: 0 0 20px; border-top: 2px solid var(--ink); }
+.path a { display: grid; grid-template-columns: 56px 1fr 80px; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.path a:hover strong { color: var(--red); }
+.path-n { font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: 46px; line-height: .9; color: var(--red); }
+.path-main { display: flex; flex-direction: column; gap: 4px; }
+.path-main strong { font-family: var(--display); font-weight: 750; font-stretch: 85%; font-size: 24px; line-height: 1.15; }
+.path-main span { color: var(--muted); font-size: 17px; line-height: 1.5; }
+.path-len { font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: right; white-space: nowrap; }
+.note { color: var(--muted); font-size: 17px; margin: 0; }
+
+/* episode blocks */
+.ep { scroll-margin-top: 16px; }
+.ep-grid { display: grid; grid-template-columns: 96px minmax(0, 760px); gap: 32px; }
+.ep-big { font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: 128px; line-height: .78; color: var(--red); margin: 0; }
+.ep-h { font-family: var(--display); font-weight: 800; font-stretch: 80%; font-size: clamp(30px, 4.2vw, 46px); line-height: 1.04; letter-spacing: -.01em; margin: 0 0 18px; }
+.why { font-size: 20px; margin: 0 0 20px; }
+audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red); }
+.moments-h { margin-bottom: 0; }
+.moments { list-style: none; padding: 0; margin: 10px 0 26px; border-top: 1px solid var(--rule); }
+.moments li { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.moments p { margin: 0; font-size: 17px; line-height: 1.5; }
+.moments strong { font-family: var(--display); font-stretch: 90%; }
+.jump { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 96px; font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .04em; font-variant-numeric: tabular-nums; background: var(--ink); color: var(--paper); border: 2px solid var(--ink); border-radius: 0; padding: 7px 10px; cursor: pointer; }
+.jump:hover, .jump:focus-visible { background: var(--red); border-color: var(--red); }
+.jump:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.jump svg { width: 9px; height: 11px; fill: currentColor; flex: none; }
+.more { font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; }
+.more::after { content: " \2192"; }
+.ep-link { margin: 0; }
+
+.clip { margin: 0 0 30px; max-width: 520px; }
+.clip video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
+.clip figcaption { margin-top: 18px; font-size: 16px; line-height: 1.5; color: var(--muted); }
+
+/* hosts */
+.band-hosts { background: var(--paper-2); }
+.hosts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+.host h3 { font-family: var(--display); font-weight: 800; font-stretch: 85%; font-size: 30px; line-height: 1.1; margin: 0 0 10px; }
+.host p { margin: 0 0 1em; }
+.host-photo { width: 100%; border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); margin-top: 8px; }
+
+/* footer */
+.foot { background: var(--ink); color: var(--paper); padding: 48px 0; }
+.foot-inner { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 20px; }
+.foot-mark { font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: 64px; line-height: 1; margin: 0; color: var(--red); }
+.listen { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.listen a { display: inline-block; padding: 10px 16px; border: 2px solid var(--paper); color: var(--paper); font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+.listen a:hover { background: var(--paper); color: var(--ink); }
+.foot-links { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.foot-links a { text-decoration-color: var(--red); }
+.foot-links a:hover { color: #ff6a50; }
+.small { font-size: 14px; color: #a79f90; margin: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 820px) {
+  body { font-size: 18px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; padding-top: 36px; padding-bottom: 40px; }
+  .cover { max-width: 240px; }
+  .band { padding: 40px 0; }
+  .path a { grid-template-columns: 40px 1fr; gap: 14px; }
+  .path-n { font-size: 38px; }
+  .path-len { grid-column: 2; text-align: left; }
+  .ep-grid { grid-template-columns: 1fr; gap: 6px; }
+  .ep-big { font-size: 72px; }
+  .why { font-size: 19px; }
+  .moments li { grid-template-columns: 1fr; gap: 8px; }
+  .hosts { grid-template-columns: 1fr; gap: 32px; }
+  .host-photo { margin-top: 16px; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="wordmark" href="/" aria-label="MESS home">MESS</a>
+  <nav><a href="/episodes/">Episodes</a><a href="/contact/">Contact</a></nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker kicker-red">For the Webby judges &middot; Best New Podcast</p>
+      <h1 class="masthead">Middle East<br><span>Sh#tshow</span></h1>
+      <p class="claim">Today&rsquo;s news, explained by someone who was there.</p>
+      <p class="intro">MESS launched in January 2026 to explain the Middle East from inside Israel&rsquo;s intelligence world. Yossi Alpher, a former Mossad officer, answers questions from his daughter Daniella, a former ABC News producer. Two people make it in Tel Aviv, with no network or sponsor behind it.</p>
+    </div>
+    <img class="cover" src="https://media.rss.com/middle-east-shitshow/podcast_cover_20260817_125919_1fd8dbab78fd024c55feebc975d05716.png" alt="MESS podcast cover art" width="360" height="360">
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2 class="kicker">Three episodes, in this order</h2>
+    <ol class="path">
+      <li><a href="#ep14"><span class="path-n">1</span><span class="path-main"><strong>The Gofman Case: What Makes a Head of Mossad</strong><span>The show at its core: a news story, and the history behind it, told first-hand.</span></span><span class="path-len">30 min</span></a></li>
+      <li><a href="#ep10"><span class="path-n">2</span><span class="path-main"><strong>A Heart Attack, Missile Alerts, and the Iran War</strong><span>Recorded in the middle of a war, and interrupted by it.</span></span><span class="path-len">29 min</span></a></li>
+      <li><a href="#ep20"><span class="path-n">3</span><span class="path-main"><strong>Not My Zionism</strong><span>A listener&rsquo;s question becomes Yossi&rsquo;s own story.</span></span><span class="path-len">26 min</span></a></li>
+    </ol>
+    <p class="note">Short on time? Under each player are the moments to hear first. Press a time and the player jumps there.</p>
+  </div>
+</section>
+
+<section class="band ep" id="ep14">
+  <div class="wrap ep-grid">
+    <p class="ep-big" aria-hidden="true">1</p>
+    <div>
+      <p class="kicker kicker-red">Start here &middot; Ep. 14 &middot; May 23, 2026 &middot; 30&nbsp;min</p>
+      <h2 class="ep-h">The Gofman Case: What Makes a Head of Mossad</h2>
+      <p class="why">When Netanyahu nominated his military secretary, Roman Gofman, to run the Mossad, MESS used the news to ask what makes a good Mossad chief. Yossi answers from experience, with first-hand stories about two of the chiefs he worked for.</p>
+      <audio id="a14" aria-label="Episode 14 audio" controls preload="none" src="https://content.rss.com/episodes/370065/2851929/middle-east-shitshow/2026_05_23_13_38_14_71621aaa-217f-4272-a176-88b49b55ed93.mp3" data-episode="Ep. 14"></audio>
+      <h3 class="kicker moments-h">Jump to</h3>
+      <ul class="moments">
+        <li><button type="button" class="jump" data-for="a14" data-t="835" aria-label="Play episode 14 from 13:55"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>13:55</button>
+          <p><strong>October 1973.</strong> On the morning the war began, Yossi walks into his boss&rsquo;s London apartment and finds the head of the Mossad, Tzvi Zamir, back from a night with an Egyptian agent, phoning Prime Minister Golda Meir. What Zamir says next shows that even he didn&rsquo;t grasp what was coming.</p></li>
+        <li><button type="button" class="jump" data-for="a14" data-t="1066" aria-label="Play episode 14 from 17:46"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>17:46</button>
+          <p><strong>1978.</strong> Yossi, then the Mossad&rsquo;s Iran analyst, briefs members of the Knesset. When he compares Iran&rsquo;s Islamists to Israel&rsquo;s religious parties, the head of the Mossad stops him: no allusions to Israeli politics. The lesson brings the episode back to Gofman, who comes to the job from Netanyahu&rsquo;s office.</p></li>
+      </ul>
+      <p class="ep-link"><a class="more" href="/episodes/14-the-gofman-case-what-makes-a-head-of-mossad/">Episode page</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="band ep" id="ep10">
+  <div class="wrap ep-grid">
+    <p class="ep-big" aria-hidden="true">2</p>
+    <div>
+      <p class="kicker kicker-red">Ep. 10 &middot; March 28, 2026 &middot; 29&nbsp;min</p>
+      <h2 class="ep-h">A Heart Attack, Missile Alerts, and the Iran War</h2>
+      <!-- To keep the heart attack out of the pitch: in the next line, delete
+           ", days after Yossi&rsquo;s heart attack"
+           and delete the video block below (from <figure> to </figure>). -->
+      <p class="why">Recorded four weeks into the war with Iran, days after Yossi&rsquo;s heart attack. The war had closed their studio at the Tel Aviv public library, so they talked online from home. Halfway through, a real missile alert cuts Daniella off mid-question. They stop until it&rsquo;s over, then come back and pick up the same question. It sounds like life in Israel this year, not like a studio.</p>
+      <audio id="a10" aria-label="Episode 10 audio" controls preload="none" src="https://content.rss.com/episodes/370065/2668605/middle-east-shitshow/2026_03_28_00_13_13_01bbe6c0-df7b-4d2b-a87c-089153a7cfbc.mp3" data-episode="Ep. 10"></audio>
+      <h3 class="kicker moments-h">Jump to</h3>
+      <ul class="moments">
+        <li><button type="button" class="jump" data-for="a10" data-t="417" aria-label="Play episode 10 from 6:57"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>6:57</button>
+          <p><strong>The war.</strong> Daniella, who grew up with Egypt and Syria as the enemies, asks why Iran is doing this: &ldquo;Why is it happening? Make it stop.&rdquo;</p></li>
+        <li><button type="button" class="jump" data-for="a10" data-t="599" aria-label="Play episode 10 from 9:59"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>9:59</button>
+          <p><strong>Before 1979.</strong> When Israel and Iran were allies.</p></li>
+        <li><button type="button" class="jump" data-for="a10" data-t="884" aria-label="Play episode 10 from 14:44"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>14:44</button>
+          <p><strong>The alert.</strong> A real missile alert cuts the conversation off.</p></li>
+      </ul>
+      <!-- Video block: the clip already on the episode 10 page. -->
+      <figure class="clip">
+        <video controls playsinline preload="none" src="/ep10-video.mp4" poster="/E10-still-image.jpg" width="1280" height="720" data-episode="Ep. 10"></video>
+        <figcaption>The &ldquo;family video&rdquo; mentioned at 6:12: waiting out a missile alarm by the road on the drive home from the hospital, March 26, 2026. 44 seconds.</figcaption>
+      </figure>
+      <p class="ep-link"><a class="more" href="/episodes/10-a-heart-attack-missile-alerts-and-the-iran-war/">Episode page</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="band ep" id="ep20">
+  <div class="wrap ep-grid">
+    <p class="ep-big" aria-hidden="true">3</p>
+    <div>
+      <p class="kicker kicker-red">Ep. 20 &middot; August 28, 2026 &middot; 26&nbsp;min</p>
+      <h2 class="ep-h">Not My Zionism</h2>
+      <p class="why">Listeners send in questions, and some become episodes. This one came from New York: how did Yossi become a Zionist, and what does he make of the word now? His answer starts in 1950s Washington, with a Jewish education in which the Holocaust took up two sentences, and turns on the Eichmann trial. Then Daniella brings him to the present and pushes back as he explains why the Zionism winning in Israel today is &ldquo;not my Zionism.&rdquo;</p>
+      <audio id="a20" aria-label="Episode 20 audio" controls preload="none" src="https://content.rss.com/episodes/370065/3103216/middle-east-shitshow/2026_08_28_12_17_42_eb178c56-d1e6-43a7-9a67-ddafbb340b06.mp3" data-episode="Ep. 20"></audio>
+      <h3 class="kicker moments-h">Jump to</h3>
+      <ul class="moments">
+        <li><button type="button" class="jump" data-for="a20" data-t="203" aria-label="Play episode 20 from 3:23"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>3:23</button>
+          <p><strong>1961.</strong> A Columbia student of Chinese, alienated from his Jewish surroundings, follows the Eichmann trial, which Ben-Gurion meant as a wake-up call. &ldquo;He was targeting me&hellip; And I bit.&rdquo;</p></li>
+        <li><button type="button" class="jump" data-for="a20" data-t="766" aria-label="Play episode 20 from 12:46"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>12:46</button>
+          <p><strong>From October 7 back to 1967.</strong> What Yossi thinks went wrong, and why he calls it &ldquo;not my Zionism.&rdquo;</p></li>
+      </ul>
+      <p class="ep-link"><a class="more" href="/episodes/20-not-my-zionism/">Episode page</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-hosts">
+  <div class="wrap">
+    <h2 class="sr-only">The hosts</h2>
+    <div class="hosts">
+      <div class="host">
+        <p class="kicker">The analyst</p>
+        <h3>Yossi Alpher</h3>
+        <p>Served in the Israel Defense Forces as an intelligence officer and in the Mossad in operational and analytical roles, and later directed the Jaffee Center for Strategic Studies at Tel Aviv University. His books include <em>Periphery: Israel&rsquo;s Search for Middle East Allies</em> and the prize-winning <em>Winners and Losers in the &lsquo;Arab Spring&rsquo;</em>.</p>
+      </div>
+      <div class="host">
+        <p class="kicker">The interviewer</p>
+        <h3>Daniella Alpher</h3>
+        <p>Formerly a television producer at ABC News in New York, making news segments for <em>Good Morning America</em>. Now a tech executive in Tel Aviv.</p>
+        <img class="host-photo" src="/studio.jpg" alt="Yossi and Daniella Alpher recording MESS in the studio" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <p class="foot-mark">MESS</p>
+    <ul class="listen"><li><a href="https://podcasts.apple.com/us/podcast/middle-east-shitshow-mess/id1873576964" rel="noopener" target="_blank">Apple Podcasts</a></li><li><a href="https://open.spotify.com/show/0yocXNxCTiVI1nBKrqZz1D" rel="noopener" target="_blank">Spotify</a></li><li><a href="https://media.rss.com/middle-east-shitshow/feed.xml" rel="noopener" target="_blank">RSS</a></li></ul>
+    <p class="foot-links"><a href="/episodes/">All episodes</a><a href="/contact/">Contact</a></p>
+    <p class="small">&copy; 2026 Daniella Alpher &amp; Yossi Alpher</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Time buttons: jump the episode's player to that moment and play.
+  function playFrom(audio, t) {
+    function fix() { if (Math.abs(audio.currentTime - t) > 1) audio.currentTime = t; }
+    try { audio.currentTime = t; } catch (e) {}
+    if (audio.readyState < 1) audio.addEventListener("loadedmetadata", fix, { once: true });
+    var p = audio.play();
+    if (p && p.catch) p.catch(function () {});
+    var r = audio.getBoundingClientRect();
+    if (r.top < 0 || r.bottom > window.innerHeight) audio.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  var buttons = document.querySelectorAll(".jump");
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", function () {
+      var audio = document.getElementById(this.getAttribute("data-for"));
+      if (audio) playFrom(audio, parseFloat(this.getAttribute("data-t")));
+    });
+  }
+  // Only one player at a time.
+  document.addEventListener("play", function (e) {
+    var media = document.querySelectorAll("audio, video");
+    for (var j = 0; j < media.length; j++) if (media[j] !== e.target && !media[j].paused) media[j].pause();
+  }, true);
+})();
+</script>
+</body>
+</html>
