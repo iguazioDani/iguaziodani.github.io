@@ -73,7 +73,6 @@ img { max-width: 100%; height: auto; display: block; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) min(450px, 36vw); gap: 0 56px; align-items: center; padding-top: 48px; padding-bottom: 52px; }
 /* title on one line across the full width: font size scales with the width (11.1% of it) */
 .masthead { grid-column: 1 / -1; white-space: nowrap; font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: min(calc((100vw - 48px) / 9.25), 115px); line-height: .86; letter-spacing: -.015em; text-transform: uppercase; margin: 0 0 36px; }
-.hero-note { grid-column: 1 / -1; margin-bottom: 20px; }
 @supports (width: 1cqi) {
   .hero-grid { container-type: inline-size; }
   .masthead { font-size: 11.1cqi; }
@@ -176,7 +175,6 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
 <main>
 <section class="hero">
   <div class="wrap hero-grid">
-    <p class="kicker hero-note">Prepared for the judges of the 31st Webby Awards</p>
     <h1 class="masthead">Middle East <span>Sh#tshow</span></h1>
     <div>
       <p class="claim">The news from Israel, explained by a father and daughter who live it.</p>
