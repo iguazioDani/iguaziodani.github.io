@@ -3,7 +3,8 @@
   Landing page: three evergreen episodes. Upload into the static/ folder on GitHub as webby.html.
   Live address: https://mideastshitshow.com/webby.html
   Not in the site menu, and hidden from search engines (robots noindex below).
-  The site build does not touch this file, so the analytics script is included here by hand.
+  The site build serves this file as written, except that it refills the All Season 1 Episodes list
+  (between the episode-list markers) from the RSS feed. The analytics script is included here by hand.
 -->
 <html lang="en">
 <head>
@@ -110,9 +111,7 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
 .jump:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
 .jump svg { width: 9px; height: 11px; fill: currentColor; flex: none; }
 .moments li.now .jump { background: var(--red); border-color: var(--red); }
-.more { font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; }
-.more::after { content: " \2192"; }
-.ep-link { margin: 0; }
+.moments:last-child { margin-bottom: 0; }
 
 .clip { margin: 0 0 30px; max-width: 760px; }
 .clip video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
@@ -226,7 +225,6 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
         <li><button type="button" class="jump" data-for="a14" data-t="1664" aria-label="Play episode 14 from 27:44"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>27:44</button>
           <p><strong>The chiefs he worked for.</strong> Yossi describes the two Mossad heads he worked for directly, Tzvi Zamir and Yitzhak Hofi.</p></li>
       </ul>
-      <p class="ep-link"><a class="more" href="/episodes/14-the-gofman-case-what-makes-a-head-of-mossad/">Episode page</a></p>
     </div>
   </div>
 </section>
@@ -269,7 +267,6 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
         <li><button type="button" class="jump" data-for="a10" data-t="1618" aria-label="Play episode 10 from 26:58"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>26:58</button>
           <p><strong>Passover in the safe room.</strong> Fifteen people are coming to Daniella&rsquo;s for Passover dinner. Will they spend part of it in the safe room?</p></li>
       </ul>
-      <p class="ep-link"><a class="more" href="/episodes/10-a-heart-attack-missile-alerts-and-the-iran-war/">Episode page</a></p>
     </div>
   </div>
 </section>
@@ -298,7 +295,6 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
         <li><button type="button" class="jump" data-for="a20" data-t="1328" aria-label="Play episode 20 from 22:08"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>22:08</button>
           <p><strong>The view from America.</strong> Whether Zionism is a dirty word is an American issue, not an Israeli one. Yossi&rsquo;s answer to American Jews: &ldquo;Get used to it.&rdquo;</p></li>
       </ul>
-      <p class="ep-link"><a class="more" href="/episodes/20-not-my-zionism/">Episode page</a></p>
     </div>
   </div>
 </section>
@@ -307,6 +303,7 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
   <div class="wrap">
     <h2 class="kicker">All Season 1 Episodes</h2>
     <ul class="ep-list">
+<!-- episode-list:start season=1 (build.py refills the rows below from the RSS feed on every build) -->
       <li class="ep-row"><a href="/episodes/23-flydubai-october-7-and-the-warnings-israel-ignored/"><span class="ep-num">Ep. 23</span><span class="ep-title">flydubai, October 7 and the Warnings Israel Ignored</span><span class="ep-meta">Oct 10, 2026 &middot; 26 min</span></a></li>
       <li class="ep-row"><a href="/episodes/22-middle-east-conflict-101-from-the-romans-to-october-7/"><span class="ep-num">Ep. 22</span><span class="ep-title">Middle East Conflict 101: From the Romans to October 7, Nobody Comes Out of This Looking Good</span><span class="ep-meta">Sep 26, 2026 &middot; 35 min</span></a></li>
       <li class="ep-row"><a href="/episodes/21-everyone-has-a-base-at-bab-al-mandeb/"><span class="ep-num">Ep. 21</span><span class="ep-title">Everyone Has a Base at Bab al-Mandeb</span><span class="ep-meta">Sep 13, 2026 &middot; 27 min</span></a></li>
@@ -329,6 +326,7 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
       <li class="ep-row"><a href="/episodes/4-from-intelligence-to-peacebuilding-what-stabilization/"><span class="ep-num">Ep. 4</span><span class="ep-title">From intelligence to peacebuilding: what stabilization forces get wrong</span><span class="ep-meta">Feb 14, 2026 &middot; 27 min</span></a></li>
       <li class="ep-row"><a href="/episodes/3-between-iran-oman-yemen-and-somaliland/"><span class="ep-num">Ep. 3</span><span class="ep-title">Between Iran, Oman, Yemen and Somaliland</span><span class="ep-meta">Feb 7, 2026 &middot; 28 min</span></a></li>
       <li class="ep-row"><a href="/episodes/2-iran-escalation-scenarios-gaza-ceasefire-fragility-and-the/"><span class="ep-num">Ep. 2</span><span class="ep-title">Iran escalation scenarios, Gaza ceasefire fragility, and the Kurdish question in Syria</span><span class="ep-meta">Jan 31, 2026 &middot; 29 min</span></a></li>
+<!-- episode-list:end -->
     </ul>
   </div>
 </section>
@@ -345,7 +343,7 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
       <div class="host">
         <p class="kicker">The interviewer, and daughter</p>
         <h3>Daniella Alpher</h3>
-        <p>A tech marketing executive. Formerly a TV news producer at ABC News in New York.</p>
+        <p>A tech marketing executive. Formerly a TV news producer at ABC News.</p>
         <img class="host-photo" src="/studio.jpg" alt="Yossi and Daniella Alpher recording MESS in the studio" loading="lazy">
       </div>
     </div>
