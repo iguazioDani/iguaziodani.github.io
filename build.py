@@ -7,6 +7,8 @@ Usage:
 
 Standard library only, so GitHub Actions needs nothing installed.
 Edit site.json for copy and links; edit static/style.css for the look.
+Static pages (static/*.html) are served as written, except for an episode list placed between
+<!-- episode-list:start --> and <!-- episode-list:end --> markers, which every build refills from the feed.
 """
 import argparse, email.utils, hashlib, html, json, re, shutil, sys, urllib.request
 import xml.etree.ElementTree as ET
@@ -109,12 +111,14 @@ def load_feed(path=None):
         num = it.findtext("itunes:episode", namespaces=NS)
         num = int(num) if num and num.strip().isdigit() else None
         ep_type = (it.findtext("itunes:episodeType", namespaces=NS) or "full").lower()
+        season = it.findtext("itunes:season", namespaces=NS)
+        season = int(season) if season and season.strip().isdigit() else None
         date = email.utils.parsedate_to_datetime(it.findtext("pubDate"))
         title = it.findtext("title", "").strip()
         desc = it.findtext("description", "")
         slug = f"{num}-{slugify(title)}" if num else slugify(title) or f"episode-{len(items) - i}"
         eps.append({
-            "num": num, "type": ep_type, "title": title, "date": date,
+            "num": num, "type": ep_type, "season": season, "title": title, "date": date,
             "date_str": date.strftime("%B %-d, %Y"), "date_short": date.strftime("%b %-d, %Y"),
             "iso": date.isoformat(), "duration": fmt_duration(it.findtext("itunes:duration", namespaces=NS)),
             "audio": enc.get("url") if enc is not None else "",
@@ -414,6 +418,30 @@ def not_found(show):
 
 # ---------- build ----------
 
+LIST_START, LIST_END = "<!-- episode-list:start", "<!-- episode-list:end -->"
+
+
+def fill_episode_lists(eps):
+    """Refills the episode list in static pages (used by webby.html), newest first, as on the Episodes page.
+    The start marker can name a season: <!-- episode-list:start season=1 --> lists only that season
+    (episodes without a season tag are included). A page without both markers is left as it is."""
+    for p in sorted(OUT.glob("*.html")):
+        text = p.read_text(encoding="utf-8")
+        a = text.find(LIST_START)
+        b = text.find(LIST_END, a + 1) if a != -1 else -1
+        if a == -1 or b == -1:
+            continue
+        head_end = text.index("-->", a) + 3
+        m = re.search(r"season=(\d+)", text[a:head_end])
+        season = int(m.group(1)) if m else None
+        rows = "".join(
+            f'      <li class="ep-row"><a href="{ep["url"]}"><span class="ep-num">{esc(ep_label(ep))}</span>'
+            f'<span class="ep-title">{esc(ep["title"])}</span>'
+            f'<span class="ep-meta">{ep["date_short"]} &middot; {ep["duration"]}</span></a></li>\n'
+            for ep in eps if season is None or ep["season"] in (None, season))
+        p.write_text(text[:head_end] + "\n" + soften(rows) + text[b:], encoding="utf-8")
+
+
 def soften(text):
     """Display spelling of the show name. URLs (lowercase, hyphenated) are left alone."""
     text = text.replace("Shitshow", "Sh#tshow").replace("SHITSHOW", "SH#TSHOW")
@@ -452,6 +480,7 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT)
+    fill_episode_lists(eps)
     write("index.html", home(show, eps))
     write("episodes/index.html", archive(show, eps))
     for i, ep in enumerate(eps):
