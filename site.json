@@ -39,7 +39,7 @@
   "hosts": [
     {
       "name": "Yossi Alpher",
-      "role": "The analyst",
+      "role": "The analyst, and father",
       "bio": [
         "A consultant and writer on Israel-related strategic issues, Yossi Alpher is the author of the prize-winning [*Winners and Losers in the ‘Arab Spring’: Profiles in Chaos*](https://www.routledge.com/Winners-and-Losers-in-the-Arab-Spring-Profiles-in-Chaos/Alpher/p/book/9780367227531) (Routledge, 2020); [*Periphery: Israel's Search for Middle East Allies*](https://www.bloomsbury.com/us/periphery-9781442231023/) and *No End of Conflict: Rethinking Israel-Palestine* (Rowman & Littlefield, 2015 and 2016, respectively).",
         "Alpher served in the Israel Defense Forces as an intelligence officer, followed by service in the Mossad in operational and analytical roles. From 1981 to 1995 he was associated with the Jaffee Center for Strategic Studies at Tel Aviv University, ultimately serving as director of the center. From 2001 to 2012 he was coeditor, with [Ghassan Khatib](https://www.facebook.com/ghassan.khatib.5/), of the bitterlemons family of internet publications."
@@ -51,7 +51,7 @@
     },
     {
       "name": "Daniella Alpher",
-      "role": "The interviewer",
+      "role": "The interviewer, and daughter",
       "bio": "A tech executive marketing cybersecurity and AI in the Israeli tech sector; formerly a television producer at ABC News in New York, making news segments for Good Morning America.",
       "photo": {
         "src": "/studio.jpg",
