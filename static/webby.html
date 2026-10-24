@@ -70,10 +70,16 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* hero */
 .hero { border-bottom: 1px solid var(--ink); }
-.hero-grid { display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: center; padding-top: 48px; padding-bottom: 52px; }
-.masthead { font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: clamp(56px, 9vw, 112px); line-height: .86; letter-spacing: -.015em; text-transform: uppercase; margin: 0 0 26px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) min(450px, 36vw); gap: 0 56px; align-items: center; padding-top: 48px; padding-bottom: 52px; }
+/* title on one line across the full width: font size scales with the width (11.1% of it) */
+.masthead { grid-column: 1 / -1; white-space: nowrap; font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: min(calc((100vw - 48px) / 9.25), 115px); line-height: .86; letter-spacing: -.015em; text-transform: uppercase; margin: 0 0 36px; }
+@supports (width: 1cqi) {
+  .hero-grid { container-type: inline-size; }
+  .masthead { font-size: 11.1cqi; }
+}
 .masthead span { color: var(--red); }
-.claim { font-family: var(--display); font-weight: 800; font-stretch: 85%; font-size: clamp(26px, 3.3vw, 38px); line-height: 1.1; margin: 0 0 18px; max-width: 22ch; }
+.claim { font-family: var(--display); font-weight: 800; font-stretch: 85%; font-size: clamp(26px, 3.3vw, 38px); line-height: 1.1; margin: 0 0 18px; max-width: 26ch; }
+.nowrap { white-space: nowrap; }
 .intro { font-size: 20px; line-height: 1.55; max-width: 46ch; margin: 0; }
 .cover { width: 100%; aspect-ratio: 1; object-fit: cover; box-shadow: 10px 10px 0 var(--ink); background: var(--paper-2); }
 
@@ -110,11 +116,11 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
 .more::after { content: " \2192"; }
 .ep-link { margin: 0; }
 
-.clip { margin: 0 0 30px; max-width: 520px; }
+.clip { margin: 0 0 30px; max-width: 760px; }
 .clip video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
 .clip figcaption { margin-top: 18px; font-size: 16px; line-height: 1.5; color: var(--muted); }
 
-/* more episodes, as on the episodes page */
+/* all season 1 episodes, as on the episodes page */
 .ep-list { list-style: none; padding: 0; margin: 0 0 24px; border-top: 2px solid var(--ink); }
 .ep-row a { display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
 .ep-row a:hover .ep-title { color: var(--red); }
@@ -144,8 +150,10 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
 
 @media (max-width: 820px) {
   body { font-size: 18px; }
-  .hero-grid { grid-template-columns: 1fr; gap: 36px; padding-top: 36px; padding-bottom: 40px; }
-  .cover { max-width: 240px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 0; padding-top: 36px; padding-bottom: 40px; }
+  .masthead { margin-bottom: 20px; }
+  .claim { text-wrap: balance; }
+  .cover { max-width: 360px; margin-top: 36px; }
   .band { padding: 40px 0; }
   .path a { grid-template-columns: 64px 1fr; gap: 14px; }
   .path-n { font-size: 34px; }
@@ -170,10 +178,10 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
 <main>
 <section class="hero">
   <div class="wrap hero-grid">
+    <h1 class="masthead">Middle East <span>Sh#tshow</span></h1>
     <div>
-      <h1 class="masthead">Middle East<br><span>Sh#tshow</span></h1>
-      <p class="claim">Today&rsquo;s news, explained by someone who was there.</p>
-      <p class="intro">MESS launched in January 2026 to explain the Middle East from inside Israel&rsquo;s intelligence world. Yossi Alpher, a former Mossad officer, answers questions from his daughter Daniella, a former ABC News producer. Two people make it in Tel Aviv, with no network or sponsor behind it.</p>
+      <p class="claim">Today&rsquo;s news about Israel, explained by a <span class="nowrap">father-daughter</span> team who live there.</p>
+      <p class="intro">MESS launched in January 2026 to explain the Middle East from inside Israel&rsquo;s intelligence world. Yossi Alpher, a former Mossad officer, answers questions from his daughter Daniella, a former ABC News producer. Produced independently by Daniella, with no network or sponsor behind it.</p>
     </div>
     <img class="cover" src="https://media.rss.com/middle-east-shitshow/podcast_cover_20260817_125919_1fd8dbab78fd024c55feebc975d05716.png" alt="MESS podcast cover art" width="360" height="360">
   </div>
@@ -205,23 +213,21 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
         <li><button type="button" class="jump" data-for="a14" data-t="67" aria-label="Play episode 14 from 1:07"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>1:07</button>
           <p><strong>The Dagan precedent.</strong> Meir Dagan was a controversial pick too, and became a spectacularly successful chief: he opened up Iran to the Mossad and brought women to the forefront.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="234" aria-label="Play episode 14 from 3:54"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>3:54</button>
-          <p><strong>Gofman&rsquo;s story.</strong> Born in Belarus, he learned he was Jewish a few months before immigrating at 14, and the army made him Israeli. Yossi, who immigrated at 19, can relate.</p></li>
+          <p><strong>Gofman&rsquo;s story.</strong> Born in Belarus, he learned he was Jewish a few months before immigrating at 14, and the army made him Israeli.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="376" aria-label="Play episode 14 from 6:16"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>6:16</button>
           <p><strong>Learning on the job.</strong> Gofman has no intelligence background. Neither did Danny Yatom, whose botched assassination attempt in Amman cost him the job, in an age when Israeli leaders still took responsibility.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="474" aria-label="Play episode 14 from 7:54"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>7:54</button>
-          <p><strong>A Russian speaker.</strong> What a Russian speaker might bring to the job, and why the Mossad kept its distance from the Soviet bloc in Yossi&rsquo;s day, told through a European businessman he cultivated.</p></li>
+          <p><strong>A Russian speaker.</strong> What a Russian speaker might bring to the job, and why the Mossad kept its distance from the Soviet bloc in Yossi&rsquo;s day.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="681" aria-label="Play episode 14 from 11:21"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>11:21</button>
           <p><strong>Picked for loyalty.</strong> Gofman and Shin Bet chief David Zini look like loyalty appointments. But Mossad chiefs have long had political ties, Yossi notes, from Isser Harel to the Palmach veterans he worked for.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="835" aria-label="Play episode 14 from 13:55"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>13:55</button>
           <p><strong>October 1973.</strong> On the morning the war began, Yossi walks into his boss&rsquo;s London apartment and finds the head of the Mossad, Tzvi Zamir, back from a night with an Egyptian agent, phoning Prime Minister Golda Meir. What Zamir says next shows that even he didn&rsquo;t grasp what was coming.</p></li>
-        <li><button type="button" class="jump" data-for="a14" data-t="1066" aria-label="Play episode 14 from 17:46"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>17:46</button>
-          <p><strong>1978.</strong> Yossi, then the Mossad&rsquo;s Iran analyst, briefs members of the Knesset. When he compares Iran&rsquo;s Islamists to Israel&rsquo;s religious parties, the head of the Mossad stops him: no allusions to Israeli politics. The lesson brings the episode back to Gofman, who comes to the job from Netanyahu&rsquo;s office.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="1236" aria-label="Play episode 14 from 20:36"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>20:36</button>
-          <p><strong>The outgoing chief.</strong> Yossi doubts reports that Dedi Barnea&rsquo;s Mossad planned to install Ahmadinejad in Iran. The first Mossad officer to deal with the Iranian revolution, he says few people anywhere understand how Iran&rsquo;s clerics rule.</p></li>
+          <p><strong>Reading Iran.</strong> Yossi was the first Mossad officer to deal with the Iranian revolution. He says few people anywhere understand how Iran&rsquo;s clerics rule.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="1313" aria-label="Play episode 14 from 21:53"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>21:53</button>
-          <p><strong>Lebanon, 1982.</strong> Yossi&rsquo;s first trip to Lebanon, by IDF helicopter during the war, and the Maronite allies the Mossad had worked with since 1975. Rabin kept Israeli forces out of Lebanon; Begin sent them in, overruling Mossad chief Yitzhak Hofi.</p></li>
+          <p><strong>Lebanon, 1982.</strong> Yossi&rsquo;s first trip to Lebanon, by IDF helicopter during the war, and the Maronite allies the Mossad had worked with since 1975.</p></li>
         <li><button type="button" class="jump" data-for="a14" data-t="1664" aria-label="Play episode 14 from 27:44"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>27:44</button>
-          <p><strong>The chiefs he worked for.</strong> Of the two Mossad heads Yossi worked for directly, Zamir and Hofi, he remembers Hofi as a man of so few words that he led almost without speaking.</p></li>
+          <p><strong>The chiefs he worked for.</strong> Yossi describes the two Mossad heads he worked for directly, Tzvi Zamir and Yitzhak Hofi.</p></li>
       </ul>
       <p class="ep-link"><a class="more" href="/episodes/14-the-gofman-case-what-makes-a-head-of-mossad/">Episode page</a></p>
     </div>
@@ -237,36 +243,36 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
       <!-- To keep the heart attack out of the pitch: in the next line, delete
            ", days after Yossi&rsquo;s heart attack", and reword the first chapter
            ("A heart attack in wartime") below. -->
-      <p class="why">Recorded four weeks into the war with Iran, days after Yossi&rsquo;s heart attack. The war had closed their studio at the Tel Aviv public library, so they talked online from home. Halfway through, a real missile alert cuts Daniella off mid-question. They stop until it&rsquo;s over, then come back and pick up the same question. It sounds like life in Israel this year, not like a studio.</p>
+      <p class="why">Recorded four weeks into the war with Iran, days after Yossi&rsquo;s heart attack. The podcast studio at the Tel Aviv public library is closed because of the war, so they record online from their homes. Halfway through, a real missile alert cuts Daniella off mid-question. They stop until it&rsquo;s over, then come back and pick up the same question.</p>
       <audio id="a10" aria-label="Episode 10 audio" controls preload="none" src="https://content.rss.com/episodes/370065/2668605/middle-east-shitshow/2026_03_28_00_13_13_01bbe6c0-df7b-4d2b-a87c-089153a7cfbc.mp3" data-episode="Ep. 10"></audio>
       <h3 class="kicker moments-h">Jump to</h3>
       <ul class="moments">
         <li><button type="button" class="jump" data-for="a10" data-t="0" aria-label="Play episode 10 from 0:00"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>0:00</button>
-          <p><strong>A heart attack in wartime.</strong> From home, with their library studio closed by the war, Yossi describes his mild heart attack, the ambulance crew waiting out a siren, and cornering his doctor in a stairwell during an alert.</p></li>
+          <p><strong>A heart attack in wartime.</strong> From home, Yossi describes his mild heart attack, the ambulance crew waiting out a siren, and cornering his doctor in a stairwell during an alert.</p></li>
         <li><button type="button" class="jump" data-for="a10" data-t="270" aria-label="Play episode 10 from 4:30"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>4:30</button>
           <p><strong>The Kissinger story.</strong> Why Yossi owes his bypass, 30 years ago, to a Henry Kissinger story, and what Kissinger said when they met. Then the drive home: a siren, and a roadside ditch.</p></li>
-        <li><button type="button" class="jump" data-for="a10" data-t="417" aria-label="Play episode 10 from 6:57"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>6:57</button>
-          <p><strong>The war.</strong> Daniella, who grew up with Egypt and Syria as the enemies, asks why Iran is doing this: &ldquo;Why is it happening? Make it stop.&rdquo;</p></li>
+      </ul>
+      <!-- Video block: the clip already on the episode 10 page. -->
+      <figure class="clip">
+        <video controls playsinline preload="none" src="/ep10-video.mp4" poster="/E10-still-image.jpg" width="1280" height="720" data-episode="Ep. 10"></video>
+        <figcaption>Waiting out an Iranian missile alarm by the side of the road (the video mentioned at 6:12). March 26, 2026.</figcaption>
+      </figure>
+      <ul class="moments">
         <li><button type="button" class="jump" data-for="a10" data-t="599" aria-label="Play episode 10 from 9:59"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>9:59</button>
           <p><strong>Before 1979.</strong> When Israel and Iran were allies.</p></li>
         <li><button type="button" class="jump" data-for="a10" data-t="884" aria-label="Play episode 10 from 14:44"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>14:44</button>
           <p><strong>The alert.</strong> A real missile alert cuts the conversation off.</p></li>
         <li><button type="button" class="jump" data-for="a10" data-t="925" aria-label="Play episode 10 from 15:25"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>15:25</button>
-          <p><strong>After the siren.</strong> Daniella picks up the same question. Yossi explains why bombing won&rsquo;t topple Iran&rsquo;s regime: the first of the war&rsquo;s mistaken strategies, he says.</p></li>
+          <p><strong>After the siren.</strong> Yossi explains why bombing won&rsquo;t topple Iran&rsquo;s regime.</p></li>
         <li><button type="button" class="jump" data-for="a10" data-t="1054" aria-label="Play episode 10 from 17:34"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>17:34</button>
           <p><strong>Iran&rsquo;s strategy.</strong> Iran is hitting the world through the price of oil. Too early to call that a success, Yossi says: it has deepened the bad blood with its Arab neighbors and exposed how weak the Gulf states are.</p></li>
         <li><button type="button" class="jump" data-for="a10" data-t="1379" aria-label="Play episode 10 from 22:59"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>22:59</button>
-          <p><strong>Where the war stands.</strong> A second front with Hezbollah, a US president who wants out, and war goals mostly out of reach: Israel will have to live with a regime that is emerging more extreme.</p></li>
+          <p><strong>Where the war stands.</strong> A second front with Hezbollah, a US president who wants out, and war goals mostly out of reach: Israel will have to live with a regime that is emerging to be more extreme.</p></li>
         <li><button type="button" class="jump" data-for="a10" data-t="1543" aria-label="Play episode 10 from 25:43"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>25:43</button>
-          <p><strong>The assassinations.</strong> Killing enemy leaders, from Hamas commanders to Ali Khamenei, hasn&rsquo;t won the war or toppled the regime. Yossi calls it a mistaken strategy that should be rethought.</p></li>
+          <p><strong>The assassinations.</strong> Killing enemy leaders, from Hamas commanders to Ali Khamenei, hasn&rsquo;t won the war or toppled the regime. Yossi calls it a mistaken strategy.</p></li>
         <li><button type="button" class="jump" data-for="a10" data-t="1618" aria-label="Play episode 10 from 26:58"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>26:58</button>
           <p><strong>Passover in the safe room.</strong> Fifteen people are coming to Daniella&rsquo;s for Passover dinner. Will they spend part of it in the safe room?</p></li>
       </ul>
-      <!-- Video block: the clip already on the episode 10 page. -->
-      <figure class="clip">
-        <video controls playsinline preload="none" src="/ep10-video.mp4" poster="/E10-still-image.jpg" width="1280" height="720" data-episode="Ep. 10"></video>
-        <figcaption>The video mentioned at 6:12: waiting out an Iranian missile alarm by the side of the road. March 26, 2026.</figcaption>
-      </figure>
       <p class="ep-link"><a class="more" href="/episodes/10-a-heart-attack-missile-alerts-and-the-iran-war/">Episode page</a></p>
     </div>
   </div>
@@ -278,47 +284,48 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
     <div>
       <p class="kicker kicker-red">Ep. 20 &middot; August 28, 2026 &middot; 26&nbsp;min</p>
       <h2 class="ep-h">Not My Zionism</h2>
-      <p class="why">Listeners send in questions, and some become episodes. This one came from New York: how did Yossi become a Zionist, and what does he make of the word now? His answer starts in 1950s Washington, with a Jewish education in which the Holocaust took up two sentences, and turns on the Eichmann trial. Then Daniella brings him to the present and pushes back as he explains why the Zionism winning in Israel today is &ldquo;not my Zionism.&rdquo;</p>
+      <p class="why">A listener asked: how did Yossi become a Zionist, and what does he make of the word now? His answer starts in 1950s Washington, DC, with a Jewish education in which the Holocaust took up two sentences, but that changes during Adolf Eichmann&rsquo;s trial. Then he turns to Israel today, where the secular Zionism that brought him here is losing ground to a religious one.</p>
       <audio id="a20" aria-label="Episode 20 audio" controls preload="none" src="https://content.rss.com/episodes/370065/3103216/middle-east-shitshow/2026_08_28_12_17_42_eb178c56-d1e6-43a7-9a67-ddafbb340b06.mp3" data-episode="Ep. 20"></audio>
       <h3 class="kicker moments-h">Jump to</h3>
       <ul class="moments">
         <li><button type="button" class="jump" data-for="a20" data-t="0" aria-label="Play episode 20 from 0:00"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>0:00</button>
           <p><strong>A listener&rsquo;s question.</strong> A friend in New York asks how Yossi became a Zionist. It starts with a bar mitzvah he found farcical, and no synagogue ever after.</p></li>
         <li><button type="button" class="jump" data-for="a20" data-t="203" aria-label="Play episode 20 from 3:23"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>3:23</button>
-          <p><strong>1961.</strong> A Columbia student of Chinese, alienated from his Jewish surroundings, follows the Eichmann trial, which Ben-Gurion meant as a wake-up call. &ldquo;He was targeting me&hellip; And I bit.&rdquo;</p></li>
-        <li><button type="button" class="jump" data-for="a20" data-t="317" aria-label="Play episode 20 from 5:17"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>5:17</button>
-          <p><strong>Two sentences.</strong> His family never spoke about the Holocaust, though a cousin in Poland had written to his father asking for help getting out. What he learned about it growing up came to two sentences.</p></li>
+          <p><strong>1961.</strong> A Columbia student in NYC, alienated from his Jewish surroundings, follows the Eichmann trial, which Ben-Gurion meant as a wake-up call. &ldquo;He was targeting me&hellip; And I bit.&rdquo;</p></li>
         <li><button type="button" class="jump" data-for="a20" data-t="452" aria-label="Play episode 20 from 7:32"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>7:32</button>
-          <p><strong>Becoming Israeli.</strong> Being Jewish, he decides, means being Israeli, whether or not the natives are friendly. He arrives by boat from Greece, learns Hebrew on a kibbutz, and not even weeks in hospital with jaundice shakes his resolve.</p></li>
+          <p><strong>Becoming Israeli.</strong> Being Jewish, for Yossi, means being Israeli, whether or not the natives are friendly. He arrives by boat from Greece, learns Hebrew on a kibbutz, and not even weeks in hospital with jaundice shakes his resolve.</p></li>
         <li><button type="button" class="jump" data-for="a20" data-t="699" aria-label="Play episode 20 from 11:39"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>11:39</button>
-          <p><strong>My Zionism.</strong> How he defined it in his twenties: a home for the Jewish people that can protect itself, so there is never another Holocaust. His part was the army and the security community.</p></li>
+          <p><strong>My Zionism.</strong> Zionism is a home for the Jewish people that can protect itself, so there is never another Holocaust. His part was the army and the security community.</p></li>
         <li><button type="button" class="jump" data-for="a20" data-t="766" aria-label="Play episode 20 from 12:46"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>12:46</button>
-          <p><strong>From October 7 back to 1967.</strong> What Yossi thinks went wrong, and why he calls it &ldquo;not my Zionism.&rdquo;</p></li>
+          <p><strong>From October 7 back to 1967.</strong> What Yossi thinks went wrong.</p></li>
         <li><button type="button" class="jump" data-for="a20" data-t="1072" aria-label="Play episode 20 from 17:52"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>17:52</button>
-          <p><strong>Religious Zionism.</strong> Yossi&rsquo;s Zionism is secular. The one winning, he says, is national religious, from the settlers to Smotrich and Ben-Gvir, and demography is on its side whoever wins the election.</p></li>
+          <p><strong>Religious Zionism.</strong> Yossi&rsquo;s Zionism is secular. The one winning, he says, is national religious, and demography is on its side.</p></li>
         <li><button type="button" class="jump" data-for="a20" data-t="1328" aria-label="Play episode 20 from 22:08"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>22:08</button>
-          <p><strong>The view from America.</strong> Whether Zionism is a dirty word is an American argument, Yossi says, not an Israeli one. His answer to American Jews: &ldquo;Get used to it.&rdquo;</p></li>
+          <p><strong>The view from America.</strong> Whether Zionism is a dirty word is an American issue, not an Israeli one. Yossi&rsquo;s answer to American Jews: &ldquo;Get used to it.&rdquo;</p></li>
       </ul>
       <p class="ep-link"><a class="more" href="/episodes/20-not-my-zionism/">Episode page</a></p>
     </div>
   </div>
 </section>
 
-<section class="band" id="more-episodes">
+<section class="band" id="season-1">
   <div class="wrap">
-    <h2 class="kicker">More episodes</h2>
+    <h2 class="kicker">All Season 1 Episodes</h2>
     <ul class="ep-list">
       <li class="ep-row"><a href="/episodes/23-flydubai-october-7-and-the-warnings-israel-ignored/"><span class="ep-num">Ep. 23</span><span class="ep-title">flydubai, October 7 and the Warnings Israel Ignored</span><span class="ep-meta">Oct 10, 2026 &middot; 26 min</span></a></li>
       <li class="ep-row"><a href="/episodes/22-middle-east-conflict-101-from-the-romans-to-october-7/"><span class="ep-num">Ep. 22</span><span class="ep-title">Middle East Conflict 101: From the Romans to October 7, Nobody Comes Out of This Looking Good</span><span class="ep-meta">Sep 26, 2026 &middot; 35 min</span></a></li>
       <li class="ep-row"><a href="/episodes/21-everyone-has-a-base-at-bab-al-mandeb/"><span class="ep-num">Ep. 21</span><span class="ep-title">Everyone Has a Base at Bab al-Mandeb</span><span class="ep-meta">Sep 13, 2026 &middot; 27 min</span></a></li>
+      <li class="ep-row"><a href="/episodes/20-not-my-zionism/"><span class="ep-num">Ep. 20</span><span class="ep-title">Not My Zionism</span><span class="ep-meta">Aug 28, 2026 &middot; 26 min</span></a></li>
       <li class="ep-row"><a href="/episodes/19-sixteen-tons-of-concrete-what-a-quiet-august-actually-means/"><span class="ep-num">Ep. 19</span><span class="ep-title">Sixteen Tons of Concrete: What a Quiet August Actually Means</span><span class="ep-meta">Aug 16, 2026 &middot; 22 min</span></a></li>
       <li class="ep-row"><a href="/episodes/18-every-front-is-quiet-but-one/"><span class="ep-num">Ep. 18</span><span class="ep-title">Every Front Is Quiet but One</span><span class="ep-meta">Aug 3, 2026 &middot; 20 min</span></a></li>
       <li class="ep-row"><a href="/episodes/17-the-iran-regime-change-fantasy/"><span class="ep-num">Ep. 17</span><span class="ep-title">The Iran Regime Change Fantasy</span><span class="ep-meta">Jul 19, 2026 &middot; 31 min</span></a></li>
       <li class="ep-row"><a href="/episodes/16-hezbollah-trump-and-the-deal-israel-didnt-get/"><span class="ep-num">Ep. 16</span><span class="ep-title">Hezbollah, Trump, and the Deal Israel Didn&rsquo;t Get</span><span class="ep-meta">Jun 20, 2026 &middot; 30 min</span></a></li>
       <li class="ep-row"><a href="/episodes/15-who-gets-left-out-of-the-conversation/"><span class="ep-num">Ep. 15</span><span class="ep-title">Who Gets Left Out of the Conversation?</span><span class="ep-meta">Jun 6, 2026 &middot; 28 min</span></a></li>
+      <li class="ep-row"><a href="/episodes/14-the-gofman-case-what-makes-a-head-of-mossad/"><span class="ep-num">Ep. 14</span><span class="ep-title">The Gofman Case: What Makes a Head of Mossad</span><span class="ep-meta">May 23, 2026 &middot; 30 min</span></a></li>
       <li class="ep-row"><a href="/episodes/13-israel-abu-dhabi-iron-dome-lasers-and-idf-boots-on-the/"><span class="ep-num">Ep. 13</span><span class="ep-title">Israel-Abu Dhabi: Iron Dome, lasers and IDF boots on the ground</span><span class="ep-meta">May 9, 2026 &middot; 20 min</span></a></li>
       <li class="ep-row"><a href="/episodes/12-israels-strategic-dead-ends/"><span class="ep-num">Ep. 12</span><span class="ep-title">Israel&rsquo;s Strategic Dead Ends</span><span class="ep-meta">Apr 18, 2026 &middot; 20 min</span></a></li>
       <li class="ep-row"><a href="/episodes/11-mowing-the-lawn-not-winning-the-war/"><span class="ep-num">Ep. 11</span><span class="ep-title">Mowing the Lawn, Not Winning the War</span><span class="ep-meta">Apr 8, 2026 &middot; 28 min</span></a></li>
+      <li class="ep-row"><a href="/episodes/10-a-heart-attack-missile-alerts-and-the-iran-war/"><span class="ep-num">Ep. 10</span><span class="ep-title">A Heart Attack, Missile Alerts, and the Iran War</span><span class="ep-meta">Mar 28, 2026 &middot; 29 min</span></a></li>
       <li class="ep-row"><a href="/episodes/9-the-illusion-of-a-new-middle-east/"><span class="ep-num">Ep. 9</span><span class="ep-title">The Illusion of a New Middle East</span><span class="ep-meta">Mar 14, 2026 &middot; 20 min</span></a></li>
       <li class="ep-row"><a href="/episodes/8-what-irans-strategy-gets-right-and-wrong/"><span class="ep-num">Ep. 8</span><span class="ep-title">What Iran&rsquo;s Strategy Gets Right and Wrong</span><span class="ep-meta">Mar 6, 2026 &middot; 25 min</span></a></li>
       <li class="ep-row"><a href="/episodes/7-from-dubai-to-cyprus-how-and-why-this-war-went-regional/"><span class="ep-num">Ep. 7</span><span class="ep-title">From Dubai to Cyprus: how and why this war went regional</span><span class="ep-meta">Mar 3, 2026 &middot; 13 min</span></a></li>
