@@ -69,7 +69,6 @@ img { max-width: 100%; height: auto; display: block; }
 .kicker-red { color: var(--red); }
 
 /* hero */
-.hero { border-bottom: 1px solid var(--ink); }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) min(450px, 36vw); gap: 0 56px; align-items: center; padding-top: 48px; padding-bottom: 52px; }
 /* title on one line across the full width: font size scales with the width (11.1% of it) */
 .masthead { grid-column: 1 / -1; white-space: nowrap; font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: min(calc((100vw - 48px) / 9.25), 115px); line-height: .86; letter-spacing: -.015em; text-transform: uppercase; margin: 0 0 36px; }
@@ -78,18 +77,18 @@ img { max-width: 100%; height: auto; display: block; }
   .masthead { font-size: 11.1cqi; }
 }
 .masthead span { color: var(--red); }
-.claim { font-family: var(--display); font-weight: 800; font-stretch: 85%; font-size: clamp(26px, 3.3vw, 38px); line-height: 1.1; margin: 0 0 18px; max-width: 26ch; }
-.nowrap { white-space: nowrap; }
+.claim { font-family: var(--display); font-weight: 800; font-stretch: 85%; font-size: clamp(26px, 3.3vw, 38px); line-height: 1.1; margin: 0 0 18px; max-width: 22ch; }
 .intro { font-size: 20px; line-height: 1.55; max-width: 46ch; margin: 0; }
 .cover { width: 100%; aspect-ratio: 1; object-fit: cover; box-shadow: 10px 10px 0 var(--ink); background: var(--paper-2); }
 
 .band { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+.band-path { border-bottom: 0; }
 
 /* the three episodes */
 .path { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
 .path a { display: grid; grid-template-columns: 92px 1fr 80px; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
 .path a:hover strong { color: var(--red); }
-.path-n { font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: 44px; white-space: nowrap; line-height: .9; color: var(--red); }
+.path-n { align-self: start; margin-top: 0.5px; font-family: var(--display); font-weight: 900; font-stretch: 62%; font-size: 44px; white-space: nowrap; line-height: .9; color: var(--red); }
 .path-main { display: flex; flex-direction: column; gap: 4px; }
 .path-main strong { font-family: var(--display); font-weight: 750; font-stretch: 85%; font-size: 24px; line-height: 1.15; }
 .path-main span { color: var(--muted); font-size: 17px; line-height: 1.5; }
@@ -102,7 +101,6 @@ img { max-width: 100%; height: auto; display: block; }
 .ep-h { font-family: var(--display); font-weight: 800; font-stretch: 80%; font-size: clamp(30px, 4.2vw, 46px); line-height: 1.04; letter-spacing: -.01em; margin: 0 0 18px; }
 .why { font-size: 20px; margin: 0 0 20px; }
 audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red); }
-.moments-h { margin-bottom: 0; }
 .moments { list-style: none; padding: 0; margin: 10px 0 26px; border-top: 1px solid var(--rule); }
 .moments li { display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--rule); }
 .moments p { margin: 0; font-size: 17px; line-height: 1.5; }
@@ -118,10 +116,10 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
 
 .clip { margin: 0 0 30px; max-width: 760px; }
 .clip video { display: block; width: 100%; height: auto; background: var(--ink); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
-.clip figcaption { margin-top: 18px; font-size: 16px; line-height: 1.5; color: var(--muted); }
+.clip figcaption { margin-top: 18px; font-size: 14.5px; line-height: 1.5; color: var(--muted); }
 
 /* all season 1 episodes, as on the episodes page */
-.ep-list { list-style: none; padding: 0; margin: 0 0 24px; border-top: 2px solid var(--ink); }
+.ep-list { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--ink); }
 .ep-row a { display: grid; grid-template-columns: 64px 1fr auto; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
 .ep-row a:hover .ep-title { color: var(--red); }
 .ep-num { font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--red); white-space: nowrap; }
@@ -156,7 +154,7 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
   .cover { max-width: 360px; margin-top: 36px; }
   .band { padding: 40px 0; }
   .path a { grid-template-columns: 64px 1fr; gap: 14px; }
-  .path-n { font-size: 34px; }
+  .path-n { font-size: 34px; margin-top: 1.5px; }
   .path-len { grid-column: 2; text-align: left; }
   .ep-grid { grid-template-columns: 1fr; gap: 6px; }
   .ep-big { font-size: 64px; }
@@ -180,14 +178,14 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
   <div class="wrap hero-grid">
     <h1 class="masthead">Middle East <span>Sh#tshow</span></h1>
     <div>
-      <p class="claim">Today&rsquo;s news about Israel, explained by a <span class="nowrap">father-daughter</span> team who live there.</p>
-      <p class="intro">MESS launched in January 2026 to explain the Middle East from inside Israel&rsquo;s intelligence world. Yossi Alpher, a former Mossad officer, answers questions from his daughter Daniella, a former ABC News producer. Produced independently by Daniella, with no network or sponsor behind it.</p>
+      <p class="claim">The news from Israel, explained by a father and daughter who live it.</p>
+      <p class="intro">MESS launched in January 2026 to explain the Middle East with the wisdom of experience inside Israel&rsquo;s intelligence community. Yossi Alpher, a former Mossad officer, answers questions from his daughter Daniella. MESS is produced independently by Daniella, with no network or sponsor behind it.</p>
     </div>
     <img class="cover" src="https://media.rss.com/middle-east-shitshow/podcast_cover_20260817_125919_1fd8dbab78fd024c55feebc975d05716.png" alt="MESS podcast cover art" width="360" height="360">
   </div>
 </section>
 
-<section class="band">
+<section class="band band-path">
   <div class="wrap">
     <h2 class="kicker">Three evergreen episodes</h2>
     <ol class="path">
@@ -202,11 +200,10 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
   <div class="wrap ep-grid">
     <p class="ep-big" aria-hidden="true">E14</p>
     <div>
-      <p class="kicker kicker-red">Start here &middot; Ep. 14 &middot; May 23, 2026 &middot; 30&nbsp;min</p>
+      <p class="kicker kicker-red">Ep. 14 &middot; May 23, 2026 &middot; 30&nbsp;min</p>
       <h2 class="ep-h">The Gofman Case: What Makes a Head of Mossad</h2>
       <p class="why">When Netanyahu nominated his military secretary, Roman Gofman, to run the Mossad, MESS used the news to ask what makes a good Mossad chief. Yossi answers from experience, with first-hand stories about two of the chiefs he worked for.</p>
       <audio id="a14" aria-label="Episode 14 audio" controls preload="none" src="https://content.rss.com/episodes/370065/2851929/middle-east-shitshow/2026_05_23_13_38_14_71621aaa-217f-4272-a176-88b49b55ed93.mp3" data-episode="Ep. 14"></audio>
-      <h3 class="kicker moments-h">Jump to</h3>
       <ul class="moments">
         <li><button type="button" class="jump" data-for="a14" data-t="0" aria-label="Play episode 14 from 0:00"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>0:00</button>
           <p><strong>The nomination.</strong> Netanyahu nominates Roman Gofman to succeed Dedi Barnea, and MESS uses the news to look at who has run the Mossad since 1949.</p></li>
@@ -245,7 +242,6 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
            ("A heart attack in wartime") below. -->
       <p class="why">Recorded four weeks into the war with Iran, days after Yossi&rsquo;s heart attack. The podcast studio at the Tel Aviv public library is closed because of the war, so they record online from their homes. Halfway through, a real missile alert cuts Daniella off mid-question. They stop until it&rsquo;s over, then come back and pick up the same question.</p>
       <audio id="a10" aria-label="Episode 10 audio" controls preload="none" src="https://content.rss.com/episodes/370065/2668605/middle-east-shitshow/2026_03_28_00_13_13_01bbe6c0-df7b-4d2b-a87c-089153a7cfbc.mp3" data-episode="Ep. 10"></audio>
-      <h3 class="kicker moments-h">Jump to</h3>
       <ul class="moments">
         <li><button type="button" class="jump" data-for="a10" data-t="0" aria-label="Play episode 10 from 0:00"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>0:00</button>
           <p><strong>A heart attack in wartime.</strong> From home, Yossi describes his mild heart attack, the ambulance crew waiting out a siren, and cornering his doctor in a stairwell during an alert.</p></li>
@@ -284,9 +280,8 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
     <div>
       <p class="kicker kicker-red">Ep. 20 &middot; August 28, 2026 &middot; 26&nbsp;min</p>
       <h2 class="ep-h">Not My Zionism</h2>
-      <p class="why">A listener asked: how did Yossi become a Zionist, and what does he make of the word now? His answer starts in 1950s Washington, DC, with a Jewish education in which the Holocaust took up two sentences, but that changes during Adolf Eichmann&rsquo;s trial. Then he turns to Israel today, where the secular Zionism that brought him here is losing ground to a religious one.</p>
+      <p class="why">A listener asked how Yossi became a Zionist, and what he makes of the word now. His answer starts in 1950s Washington, DC, with a Jewish education in which the Holocaust took up two sentences. That changes during Adolf Eichmann&rsquo;s trial. Yossi then turns to Israel today, where the secular Zionism that brought him there is losing ground to a religious one.</p>
       <audio id="a20" aria-label="Episode 20 audio" controls preload="none" src="https://content.rss.com/episodes/370065/3103216/middle-east-shitshow/2026_08_28_12_17_42_eb178c56-d1e6-43a7-9a67-ddafbb340b06.mp3" data-episode="Ep. 20"></audio>
-      <h3 class="kicker moments-h">Jump to</h3>
       <ul class="moments">
         <li><button type="button" class="jump" data-for="a20" data-t="0" aria-label="Play episode 20 from 0:00"><svg viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0l9 5.5L0 11z"/></svg>0:00</button>
           <p><strong>A listener&rsquo;s question.</strong> A friend in New York asks how Yossi became a Zionist. It starts with a bar mitzvah he found farcical, and no synagogue ever after.</p></li>
@@ -335,7 +330,6 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
       <li class="ep-row"><a href="/episodes/3-between-iran-oman-yemen-and-somaliland/"><span class="ep-num">Ep. 3</span><span class="ep-title">Between Iran, Oman, Yemen and Somaliland</span><span class="ep-meta">Feb 7, 2026 &middot; 28 min</span></a></li>
       <li class="ep-row"><a href="/episodes/2-iran-escalation-scenarios-gaza-ceasefire-fragility-and-the/"><span class="ep-num">Ep. 2</span><span class="ep-title">Iran escalation scenarios, Gaza ceasefire fragility, and the Kurdish question in Syria</span><span class="ep-meta">Jan 31, 2026 &middot; 29 min</span></a></li>
     </ul>
-    <p class="ep-link"><a class="more" href="/episodes/">All episodes</a></p>
   </div>
 </section>
 
@@ -344,12 +338,12 @@ audio { display: block; width: 100%; margin: 4px 0 26px; accent-color: var(--red
     <h2 class="sr-only">The hosts</h2>
     <div class="hosts">
       <div class="host">
-        <p class="kicker">The analyst</p>
+        <p class="kicker">The analyst, and father</p>
         <h3>Yossi Alpher</h3>
         <p>Served in the Israel Defense Forces as an intelligence officer and in the Mossad in operational and analytical roles, and later directed the Jaffee Center for Strategic Studies at Tel Aviv University. His books include <a href="https://www.bloomsbury.com/us/periphery-9781442231023/" rel="noopener" target="_blank"><em>Periphery: Israel&rsquo;s Search for Middle East Allies</em></a> and the prize-winning <a href="https://www.routledge.com/Winners-and-Losers-in-the-Arab-Spring-Profiles-in-Chaos/Alpher/p/book/9780367227531" rel="noopener" target="_blank"><em>Winners and Losers in the &lsquo;Arab Spring&rsquo;</em></a>.</p>
       </div>
       <div class="host">
-        <p class="kicker">The interviewer</p>
+        <p class="kicker">The interviewer, and daughter</p>
         <h3>Daniella Alpher</h3>
         <p>A tech marketing executive. Formerly a TV news producer at ABC News in New York.</p>
         <img class="host-photo" src="/studio.jpg" alt="Yossi and Daniella Alpher recording MESS in the studio" loading="lazy">
