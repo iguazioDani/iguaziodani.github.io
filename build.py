@@ -8,7 +8,8 @@ Usage:
 Standard library only, so GitHub Actions needs nothing installed.
 Edit site.json for copy and links; edit static/style.css for the look.
 Static pages (static/*.html) are served as written, except for an episode list placed between
-<!-- episode-list:start --> and <!-- episode-list:end --> markers, which every build refills from the feed.
+<!-- episode-list:start --> and <!-- episode-list:end --> markers, which every build refills from the feed,
+and RSS.com show-cover addresses, which every build points at the feed's current cover.
 """
 import argparse, email.utils, hashlib, html, json, re, shutil, sys, urllib.request
 import xml.etree.ElementTree as ET
@@ -442,6 +443,21 @@ def fill_episode_lists(eps):
         p.write_text(text[:head_end] + "\n" + soften(rows) + text[b:], encoding="utf-8")
 
 
+COVER_URL = re.compile(r"https://media\.rss\.com/[\w-]+/podcast_cover_\w+\.(?:png|jpe?g|webp)")
+
+
+def fill_show_cover(show):
+    """Points static pages (webby.html) at the feed's current show cover, so a new cover uploaded
+    in RSS.com reaches them on the next build. Only RSS.com show-cover addresses are changed."""
+    if not show["image"]:
+        return
+    for p in sorted(OUT.glob("*.html")):
+        text = p.read_text(encoding="utf-8")
+        new = COVER_URL.sub(lambda m: esc(show["image"]), text)
+        if new != text:
+            p.write_text(new, encoding="utf-8")
+
+
 def soften(text):
     """Display spelling of the show name. URLs (lowercase, hyphenated) are left alone."""
     text = text.replace("Shitshow", "Sh#tshow").replace("SHITSHOW", "SH#TSHOW")
@@ -481,6 +497,7 @@ def main():
         shutil.rmtree(OUT)
     shutil.copytree(ROOT / "static", OUT)
     fill_episode_lists(eps)
+    fill_show_cover(show)
     write("index.html", home(show, eps))
     write("episodes/index.html", archive(show, eps))
     for i, ep in enumerate(eps):
