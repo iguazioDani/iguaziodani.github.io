@@ -460,6 +460,8 @@ def episode(show, eps, i):
                 f'<script type="application/ld+json">{json.dumps(ld)}</script>')
 
 
+# The form sends in the background. When Formspree accepts a message, the page counts one
+# "Contact form sent" event in Umami, labeled by topic. The name, email and message never go to Umami.
 def contact_page(show):
     c = CFG["contact"]
     topics = "".join(f"<option>{esc(t)}</option>" for t in c.get("topics", []))
@@ -483,6 +485,11 @@ def contact_page(show):
 <script>
 (function () {{
   var f = document.getElementById("contact-form"), s = document.getElementById("form-status");
+  function count(d) {{
+    try {{
+      if (window.umami && !d._gotcha) window.umami.track("Contact form sent", d.topic ? {{ topic: d.topic }} : undefined);
+    }} catch (e) {{}}
+  }}
   f.addEventListener("submit", function (e) {{
     e.preventDefault();
     var b = f.querySelector("button");
@@ -492,7 +499,7 @@ def contact_page(show):
     fetch(f.action, {{ method: "POST", headers: {{ "Content-Type": "application/json", Accept: "application/json" }}, body: JSON.stringify(data) }})
       .then(function (r) {{
         return r.json().catch(function () {{ return {{}}; }}).then(function (j) {{
-          if (r.ok) {{ f.reset(); s.className = "form-status ok"; s.textContent = "Thanks. Your message is on its way."; return; }}
+          if (r.ok) {{ f.reset(); s.className = "form-status ok"; s.textContent = "Thanks. Your message is on its way."; count(data); return; }}
           var msg = (j.errors || []).map(function (x) {{ return x.message; }}).join(" ");
           throw new Error(msg || "failed");
         }});
