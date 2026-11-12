@@ -462,6 +462,9 @@ def episode(show, eps, i):
 
 # The form sends in the background. When Formspree accepts a message, the page counts one
 # "Contact form sent" event in Umami, labeled by topic. The name, email and message never go to Umami.
+# The form has no hidden trap ("honeypot") field. It had one until Nov 2026 (a text field named _gotcha,
+# moved off screen): a browser's autofill filled it for a real visitor, and Formspree then filed the
+# message as spam without emailing it. Formspree's own spam filter is what catches the bots.
 def contact_page(show):
     c = CFG["contact"]
     topics = "".join(f"<option>{esc(t)}</option>" for t in c.get("topics", []))
@@ -473,7 +476,6 @@ def contact_page(show):
 {note}
 <form class="contact" id="contact-form" action="https://formspree.io/f/{esc(c['formspree_id'])}" method="POST">
   <input type="hidden" name="_subject" value="New message from the MESS website">
-  <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
   <label>Your name<input type="text" name="name" required autocomplete="name"></label>
   <label>Your email<input type="email" name="email" required autocomplete="email"></label>
   {topic_field}
@@ -487,7 +489,7 @@ def contact_page(show):
   var f = document.getElementById("contact-form"), s = document.getElementById("form-status");
   function count(d) {{
     try {{
-      if (window.umami && !d._gotcha) window.umami.track("Contact form sent", d.topic ? {{ topic: d.topic }} : undefined);
+      if (window.umami) window.umami.track("Contact form sent", d.topic ? {{ topic: d.topic }} : undefined);
     }} catch (e) {{}}
   }}
   f.addEventListener("submit", function (e) {{
