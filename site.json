@@ -36,6 +36,10 @@
       "caption": "March 26, 2026"
     }
   ],
+  "trailer": {
+    "file": "/mess-trailer.mp3",
+    "label": "Trailer"
+  },
   "hosts": [
     {
       "name": "Yossi Alpher",
