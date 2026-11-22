@@ -114,6 +114,8 @@ def load_feed(path=None):
         num = it.findtext("itunes:episode", namespaces=NS)
         num = int(num) if num and num.strip().isdigit() else None
         ep_type = (it.findtext("itunes:episodeType", namespaces=NS) or "full").lower()
+        if ep_type == "trailer":
+            continue  # a trailer in the feed (for Apple Podcasts) stays off the site's episode lists
         season = it.findtext("itunes:season", namespaces=NS)
         season = int(season) if season and season.strip().isdigit() else None
         date = email.utils.parsedate_to_datetime(it.findtext("pubDate"))
@@ -373,62 +375,21 @@ def cover_html(show):
 
 # ---------- trailer (homepage) ----------
 # site.json "trailer" ({"file": "/mess-trailer.mp3", "label": "Trailer"}) puts a player under the cover,
-# labeled with the file's length. The file goes in static/; if it isn't there, the player is left out
+# with the label under the player. The file goes in static/; if it isn't there, the player is left out
 # rather than shown broken. Remove "trailer" from site.json to go back to the cover alone.
-
-def mp3_seconds(path):
-    """Length of an MP3 in whole seconds, from its Xing/Info header or else its bitrate. None if unreadable."""
-    try:
-        data = path.read_bytes()
-    except OSError:
-        return None
-    pos = 0
-    if data[:3] == b"ID3" and len(data) >= 10:  # skip the tag block in front of the audio
-        pos = 10 + ((data[6] & 127) << 21 | (data[7] & 127) << 14 | (data[8] & 127) << 7 | (data[9] & 127))
-        pos += 10 if data[5] & 16 else 0
-    rates = {3: (44100, 48000, 32000), 2: (22050, 24000, 16000), 0: (11025, 12000, 8000)}
-    kbps1 = (0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320)
-    kbps2 = (0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160)
-    while True:  # first MP3 frame header, confirmed by the one after it
-        pos = data.find(b"\xff", pos)
-        if pos < 0 or pos + 4 > len(data):
-            return None
-        b1, b2 = data[pos + 1], data[pos + 2]
-        ver, layer, bri, sri = (b1 >> 3) & 3, (b1 >> 1) & 3, b2 >> 4, (b2 >> 2) & 3
-        if b1 & 0xE0 == 0xE0 and ver != 1 and layer == 1 and 0 < bri < 15 and sri < 3:
-            mpeg1 = ver == 3
-            rate, kbps = rates[ver][sri], (kbps1 if mpeg1 else kbps2)[bri]
-            size = (144 if mpeg1 else 72) * kbps * 1000 // rate + ((b2 >> 1) & 1)
-            nxt = pos + size
-            if nxt + 2 > len(data) or (data[nxt] == 0xFF and data[nxt + 1] & 0xE0 == 0xE0):
-                break
-        pos += 1
-    mono = data[pos + 3] >> 6 == 3
-    x = pos + 4 + ((17 if mono else 32) if mpeg1 else (9 if mono else 17))
-    if data[x:x + 4] in (b"Xing", b"Info") and len(data) >= x + 12 and data[x + 7] & 1:
-        frames = int.from_bytes(data[x + 8:x + 12], "big")
-        return int(frames * (1152 if mpeg1 else 576) / rate)
-    end = len(data) - (128 if data[-128:-125] == b"TAG" else 0)
-    return int((end - pos) * 8 / (kbps * 1000))
-
 
 def trailer_html():
     t = CFG.get("trailer") or {}
     src = t.get("file", "")
     if not src:
         return ""
-    secs = None
-    if src.startswith("/"):
-        local = ROOT / "static" / src.lstrip("/")
-        if not local.is_file():
-            print(f"Note: {src} is not in static/, so the homepage trailer is left out.")
-            return ""
-        secs = mp3_seconds(local)
-    length = f" &middot; {secs // 60}:{secs % 60:02d}" if secs else ""
-    return f"""<div class="hero-trailer">
-  <p class="kicker kicker-red">{esc(t.get("label") or "Trailer")}{length}</p>
+    if src.startswith("/") and not (ROOT / "static" / src.lstrip("/")).is_file():
+        print(f"Note: {src} is not in static/, so the homepage trailer is left out.")
+        return ""
+    return f"""<figure class="hero-trailer">
   <audio controls preload="metadata" src="{esc(src)}" data-episode="Trailer" aria-label="MESS trailer"></audio>
-</div>
+  <figcaption class="kicker kicker-red">{esc(t.get("label") or "Trailer")}</figcaption>
+</figure>
 <script>
 // One player at a time: starting the trailer pauses the latest episode, and the other way round.
 document.addEventListener("play", function (e) {{
