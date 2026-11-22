@@ -59,7 +59,7 @@ img { max-width: 100%; height: auto; display: block; }
 .cover { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--paper-2); }
 /* trailer player under the cover (homepage), with its label under it */
 .hero-side .cover { display: block; }
-.hero-trailer { margin: 6px 0 0; text-align: center; }
+.hero-trailer { margin: 24px 0 0; text-align: center; }
 .hero-trailer .kicker { margin: 10px 0 0; }
 .hero-trailer audio { display: block; margin: 0; }
 .hero-trailer audio::-webkit-media-controls-panel { background-color: var(--paper-2); } /* Chrome: warm, not gray */
