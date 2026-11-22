@@ -57,6 +57,12 @@ img { max-width: 100%; height: auto; display: block; }
 .masthead span { color: var(--red); }
 .tagline { font-size: 23px; line-height: 1.45; max-width: 34ch; margin: 0 0 28px; }
 .cover { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--paper-2); }
+/* trailer player under the cover (homepage) */
+.hero-side .cover { display: block; }
+.hero-trailer { margin-top: 6px; text-align: center; }
+.hero-trailer .kicker { margin: 0 0 8px; }
+.hero-trailer audio { display: block; margin: 0; }
+.hero-trailer audio::-webkit-media-controls-panel { background-color: var(--paper-2); } /* Chrome: warm, not gray */
 
 .listen { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .listen a {
@@ -127,6 +133,7 @@ audio { width: 100%; margin: 8px 0 24px; accent-color: var(--red); }
   body { font-size: 18px; }
   .hero-grid { grid-template-columns: 1fr; gap: 36px; padding-top: 36px; padding-bottom: 40px; }
   .cover { max-width: 260px; }
+  .hero-side .cover { margin: 0 auto; } /* on phones: cover centered over a full-width trailer player */
   .hosts { grid-template-columns: 1fr; gap: 32px; }
   .ep-row a { grid-template-columns: 1fr; gap: 6px; }
   .ep-meta { text-align: left; padding: 0; }
